@@ -88,6 +88,8 @@ The `lein doc` command is configured in `project.clj` to output documentation to
 
 Once `lein doc` is run in `ring-okta`, you can commit the changes in `ring-okta-doc` to the `gh-pages` branch of this repository.
 
+See [Creating Project Pages manually](https://help.github.com/articles/creating-project-pages-manually/).
+
 ## License
 
 Copyright © 2015 Hendrick Automotive Group
