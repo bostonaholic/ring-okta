@@ -1,10 +1,11 @@
 (ns ring.ring-okta.session
   (:require [ring.ring-okta.saml :as saml]
             [clojure.core.incubator :refer [dissoc-in]]
+            [clojure.java.io :as io]
             [ring.util.response :as response]))
 
-(defn login [{:keys [params okta-config-location]}]
-  (let [okta-response (saml/respond-to-okta-post params okta-config-location)]
+(defn login [{:keys [okta-config-location params]}]
+  (let [okta-response (saml/respond-to-okta-post (slurp (io/resource okta-config-location)) params)]
     (assoc-in
      (response/redirect-after-post (:redirect-url okta-response))
      [:session :okta/user]

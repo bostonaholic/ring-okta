@@ -13,37 +13,40 @@
                  003&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[clojure.core.incubator&nbsp;:refer&nbsp;[dissoc-in]]
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                 004&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ring.util.response&nbsp;:as&nbsp;response]))
-                </span><br/>
-<span class="blank" title="0 out of 0 forms covered">
-                 005&nbsp;&nbsp;
-                </span><br/>
-<span class="covered" title="1 out of 1 forms covered">
-                 006&nbsp;&nbsp;(defn&nbsp;login&nbsp;[{:keys&nbsp;[params&nbsp;okta-config-location]}]
-                </span><br/>
-<span class="covered" title="5 out of 5 forms covered">
-                 007&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[okta-response&nbsp;(saml/respond-to-okta-post&nbsp;params&nbsp;okta-config-location)]
-                </span><br/>
-<span class="covered" title="5 out of 5 forms covered">
-                 008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(assoc-in
-                </span><br/>
-<span class="covered" title="5 out of 5 forms covered">
-                 009&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(response/redirect-after-post&nbsp;(:redirect-url&nbsp;okta-response))
+                 004&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[clojure.java.io&nbsp;:as&nbsp;io]
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                 010&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[:session&nbsp;:okta/user]
-                </span><br/>
-<span class="covered" title="3 out of 3 forms covered">
-                 011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(:authenticated-user-email&nbsp;okta-response))))
+                 005&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ring.util.response&nbsp;:as&nbsp;response]))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                 012&nbsp;&nbsp;
+                 006&nbsp;&nbsp;
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                 013&nbsp;&nbsp;(defn&nbsp;logout&nbsp;[request]
+                 007&nbsp;&nbsp;(defn&nbsp;login&nbsp;[{:keys&nbsp;[okta-config-location&nbsp;params]}]
+                </span><br/>
+<span class="covered" title="9 out of 9 forms covered">
+                 008&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[okta-response&nbsp;(saml/respond-to-okta-post&nbsp;(slurp&nbsp;(io/resource&nbsp;okta-config-location))&nbsp;params)]
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                 009&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(assoc-in
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                 010&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(response/redirect-after-post&nbsp;(:redirect-url&nbsp;okta-response))
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                 011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[:session&nbsp;:okta/user]
+                </span><br/>
+<span class="covered" title="3 out of 3 forms covered">
+                 012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(:authenticated-user-email&nbsp;okta-response))))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                 013&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                 014&nbsp;&nbsp;(defn&nbsp;logout&nbsp;[request]
                 </span><br/>
 <span class="covered" title="6 out of 6 forms covered">
-                 014&nbsp;&nbsp;&nbsp;&nbsp;(dissoc-in&nbsp;request&nbsp;[:session&nbsp;:okta/user]))
+                 015&nbsp;&nbsp;&nbsp;&nbsp;(dissoc-in&nbsp;request&nbsp;[:session&nbsp;:okta/user]))
                 </span><br/>
  </body>
 </html>
