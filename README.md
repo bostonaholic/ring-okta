@@ -53,7 +53,7 @@ the `project.clj` for the version of the SAML Toolkit to download from Okta.
 
 (def app
   (-> company-routes
-      (wrap-okta {:okta-home "https://company.okta.com"})))
+      (wrap-okta "https://company.okta.com")))
 ```
 
 ## Documentation

@@ -24,10 +24,14 @@
 (defn wrap-okta
   "Ring middleware for Okta Single Sign-on
 
-  Accepts the following options:
+  Arguments:
 
-  :okta-home             - (required) the URL to be redirected to for Okta login
+  handler                - the ring handler function
+
+  okta-home              - the URL to be redirected to for Okta login
                            e.g. https://company.okta.com
+
+  Accepts the following options:
 
   :okta-config           - the location of the Okta configuration file
                            (defaults to \"resources/okta-config.xml\")
@@ -40,17 +44,22 @@
 
   :force-user            - a default user to be used for development"
 
-  {:arglists '([handler options]) :added "0.1.0"}
-  [handler {:keys [okta-config redirect-after-logout]
-            :or {okta-config (io/resource "okta-config.xml")
-                 redirect-after-logout "/"}
-            :as options}]
-  {:pre [(not-empty (:okta-home options))]}
-  (fn [request]
-    (cond
-     (p/login? request) (handler (assoc request :okta-config-location okta-config))
-     (p/logout? request) (handler (assoc request :redirect-after-logout redirect-after-logout))
-     (p/logged-in? request) (handler request)
-     (p/force-user? (:force-user options)) (handler (assoc-in request [:session :okta/user] (:force-user options)))
-     (p/skip-route? request (:skip-routes options)) (handler request)
-     :else (ring-response/redirect (:okta-home options)))))
+  {:arglists '([handler okta-home] [handler okta-home options]) :added "0.1.0"}
+
+  ([handler okta-home] (wrap-okta handler okta-home {}))
+
+  ([handler okta-home {:keys [okta-config redirect-after-logout]
+                        :or {okta-config (io/resource "okta-config.xml")
+                             redirect-after-logout "/"}
+                       :as options}]
+
+   {:pre [(not-empty okta-home)]}
+
+   (fn [request]
+     (cond
+       (p/login? request) (handler (assoc request :okta-config-location okta-config))
+       (p/logout? request) (handler (assoc request :redirect-after-logout redirect-after-logout))
+       (p/logged-in? request) (handler request)
+       (p/force-user? (:force-user options)) (handler (assoc-in request [:session :okta/user] (:force-user options)))
+       (p/skip-route? request (:skip-routes options)) (handler request)
+       :else (ring-response/redirect okta-home)))))
