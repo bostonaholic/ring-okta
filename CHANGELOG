@@ -1,3 +1,9 @@
+v0.2.0 TBD
+
+	* clojure and ring-core are set to "provided" scope
+	* okta-home is an argument to wrap-okta
+	* Upgrade clojure 1.8.0
+
 v0.1.6 2015-12-02
 
 	* Upgrade saml-toolkit 1.0.12
