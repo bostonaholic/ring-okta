@@ -1,6 +1,6 @@
 # ring-okta
 
-[![Build Status](https://travis-ci.org/Hendrick/ring-okta.svg?branch=master)](https://travis-ci.org/Hendrick/ring-okta)
+FIXME: [![Build Status](https://travis-ci.org/bostonaholic/ring-okta.svg?branch=master)](https://travis-ci.org/bostonaholic/ring-okta)
 
 Ring middleware for Okta Single Sign-on.
 
@@ -9,20 +9,20 @@ Ring middleware for Okta Single Sign-on.
 ### Leiningen
 
 ```
-[ring-okta "0.1.6"]
+[bostonaholic/ring-okta "0.1.6"]
 ```
 
 ### Gradle
 
 ```
-compile "ring-okta:ring-okta:0.1.6"
+compile "bostonaholic:ring-okta:0.1.6"
 ```
 
 ### Maven
 
 ```
 <dependency>
-  <groupId>ring-okta</groupId>
+  <groupId>bostonaholic</groupId>
   <artifactId>ring-okta</artifactId>
   <version>0.1.6</version>
 </dependency
@@ -58,10 +58,10 @@ the `project.clj` for the version of the SAML Toolkit to download from Okta.
 
 ## Documentation
 
-- [API Docs](http://Hendrick.github.io/ring-okta/index.html)
+- [API Docs](http://bostonaholic.github.io/ring-okta/index.html)
 
 The documentation is built with [codox](https://github.com/weavejester/codox) (`lein doc`) and published to
-the [gh-pages](https://github.com/Hendrick/ring-okta/tree/gh-pages) branch.
+the [gh-pages](https://github.com/bostonaholic/ring-okta/tree/gh-pages) branch.
 
 ## Test Coverage
 
@@ -92,7 +92,7 @@ See [Creating Project Pages manually](https://help.github.com/articles/creating-
 
 ## License
 
-Copyright © 2015 Hendrick Automotive Group
+Copyright © 2019 Matthew Boston
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.

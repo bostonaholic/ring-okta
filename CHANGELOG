@@ -3,6 +3,7 @@ v0.2.0 TBD
 	* clojure and ring-core are set to "provided" scope
 	* okta-home is an argument to wrap-okta
 	* Upgrade clojure 1.8.0
+	* Change groupId to bostonaholic
 
 v0.1.6 2015-12-02
 
@@ -40,5 +41,5 @@ v0.1.0 2014-09-09
 	* Initial release.
 
 
-Copyright © 2015 Hendrick Automotive Group
+Copyright © 2019 Matthew Boston
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
