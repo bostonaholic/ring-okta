@@ -28,7 +28,7 @@
   :pedantic? :abort
 
   :plugins [[lein-codox "0.10.6"]
-            [lein-cloverage "1.0.6"]]
+            [lein-cloverage "1.1.1"]]
 
   :codox {:namespaces [ring.middleware.okta]
           :output-path "../ring-okta-doc"}
