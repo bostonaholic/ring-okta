@@ -41,12 +41,6 @@
           :output-path "../ring-okta-doc"}
 
   :profiles {:dev {:resource-paths ["test-resources"]}
-             :1.5 {:resource-paths ["test-resources"]
-                   :dependencies [[org.clojure/clojure "1.5.1"]]}
-             :1.6 {:resource-paths ["test-resources"]
-                   :dependencies [[org.clojure/clojure "1.6.0"]]}
-             :1.7 {:resource-paths ["test-resources"]
-                   :dependencies [[org.clojure/clojure "1.7.0"]]}
              :1.8 {:resource-paths ["test-resources"]
                    :dependencies [[org.clojure/clojure "1.8.0"]]}
              :1.9 {:resource-paths ["test-resources"]
@@ -54,6 +48,6 @@
              :1.10 {:resource-paths ["test-resources"]
                    :dependencies [[org.clojure/clojure "1.10.0"]]}}
 
-  :aliases {"test-all-profiles" ["with-profile" "dev:1.5:1.6:1.7:1.8:1.9:1.10" "test"]
+  :aliases {"test-all-profiles" ["with-profile" "dev:1.8:1.9:1.10" "test"]
             "cloverage" ["do" "cloverage" "--output" "doc/coverage"]
             "release" ["do" "clean," "deploy" "clojars"]})
