@@ -1,4 +1,4 @@
-(defproject bostonaholic/ring-okta "0.2.0"
+(defproject bostonaholic/ring-okta "0.2.1-SNAPSHOT"
   :description "Ring middleware for Okta Single Sign-on"
   :url "https://github.com/bostonaholic/ring-okta"
   :license {:name "Eclipse Public License"
