@@ -1,6 +1,6 @@
 version: 2
 
-defaults:
+defaults: &defaults
   working_directory: ~/ring-okta
   docker:
     - image: clojure:lein-2.9.1
