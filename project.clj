@@ -23,10 +23,10 @@
                  [org.apache.commons/commons-lang3 "3.0"]
                  [javax.servlet/javax.servlet-api "3.0.1" :scope "provided"]
                  [org.opensaml/opensaml "2.6.4"]]
-  :plugins [[codox "0.8.12"]
+  :plugins [[lein-codox "0.10.6"]
             [lein-cloverage "1.0.6"]]
-  :codox {:include ring.middleware.okta
-          :output-dir "../ring-okta-doc"}
+  :codox {:namespaces [ring.middleware.okta]
+          :output-path "../ring-okta-doc"}
   :profiles {:dev {:resource-paths ["test-resources"]}
              :1.5 {:resource-paths ["test-resources"]
                    :dependencies [[org.clojure/clojure "1.5.1"]]}

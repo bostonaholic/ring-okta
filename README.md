@@ -77,7 +77,7 @@ $ mvn install:install-file -Dfile=saml-toolkit.jar -DgroupId=com.okta -Dartifact
 
 ### Generating API Docs
 
-The `lein doc` command is configured in `project.clj` to output documentation to `../ring-okta-doc`. This should be configured to be the `gh-pages` branch so the API docs can be hosted on GitHub.
+The `lein codox` command is configured in `project.clj` to output documentation to `../ring-okta-doc`. This should be configured to be the `gh-pages` branch so the API docs can be hosted on GitHub.
 
 ```
 ~/code
