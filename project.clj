@@ -10,7 +10,7 @@
                                                                         org.clojure/clojure]]
                  [ring-mock "0.1.5" :scope "test"]
                  [compojure "1.4.0" :exclusions [joda-time org.clojure/clojure]]
-                 [org.clojure/data.codec "0.1.0"]
+                 [org.clojure/data.codec "0.1.1" :exclusions [org.clojure/clojure]]
                  [com.okta/saml-toolkit "1.0.12-000170-c7ed721"]
 
                  ;; okta dependencies -- some are not specified in their pom,
