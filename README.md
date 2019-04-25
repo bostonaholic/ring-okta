@@ -1,6 +1,6 @@
 # ring-okta
 
-FIXME: [![Build Status](https://travis-ci.org/bostonaholic/ring-okta.svg?branch=master)](https://travis-ci.org/bostonaholic/ring-okta)
+[![CircleCI](https://circleci.com/gh/bostonaholic/ring-okta/tree/master.svg?style=svg)](https://circleci.com/gh/bostonaholic/ring-okta/tree/master)
 
 Ring middleware for Okta Single Sign-on.
 
