@@ -1,3 +1,12 @@
+v0.3.0 2019-04-24
+	* Upgrade org.clojure/core.incubator 0.1.4
+	* Upgrade org.clojure/data.codec 0.1.1
+	* Upgrade lein-cloverage 1.1.1
+	* Upgrade ring/ring-core 1.7.1
+	* Upgrade compojure 1.6.1
+	* Remove support for clojure 1.5.1, 1.6.0, and 1.7.0
+	* Upgrade org.clojure/clojure 1.10.0
+
 v0.2.0 2019-04-24
 
 	* clojure and ring-core are set to "provided" scope
