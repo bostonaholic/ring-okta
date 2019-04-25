@@ -6,9 +6,10 @@
   :repositories {"local" ~(str (.toURI (java.io.File. "maven_repository")))}
   :dependencies [[org.clojure/clojure "1.8.0" :scope "provided"]
                  [org.clojure/core.incubator "0.1.3"]
-                 [ring/ring-core "1.4.0" :scope "provided"]
+                 [ring/ring-core "1.4.0" :scope "provided" :exclusions [joda-time
+                                                                        org.clojure/clojure]]
                  [ring-mock "0.1.5" :scope "test"]
-                 [compojure "1.4.0"]
+                 [compojure "1.4.0" :exclusions [joda-time org.clojure/clojure]]
                  [org.clojure/data.codec "0.1.0"]
                  [com.okta/saml-toolkit "1.0.12-000170-c7ed721"]
 
@@ -23,6 +24,7 @@
                  [org.apache.commons/commons-lang3 "3.0"]
                  [javax.servlet/javax.servlet-api "3.0.1" :scope "provided"]
                  [org.opensaml/opensaml "2.6.4"]]
+  :pedantic? :abort
   :plugins [[lein-codox "0.10.6"]
             [lein-cloverage "1.0.6"]]
   :codox {:namespaces [ring.middleware.okta]
