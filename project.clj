@@ -13,6 +13,9 @@
                  [org.clojure/data.codec "0.1.1" :exclusions [org.clojure/clojure]]
                  [com.okta/saml-toolkit "1.0.12-000170-c7ed721"]
 
+                 ;; This is required because CircleCI uses leiningen 2.8.2
+                 [cloverage "1.1.1" :exclusions [org.clojure/clojure]]
+
                  ;; okta dependencies -- some are not specified in their pom,
                  ;; others are borked because of our weird local repo thing that
                  ;; we do in order to please the Travis-CI gods
