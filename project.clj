@@ -24,11 +24,15 @@
                  [org.apache.commons/commons-lang3 "3.0"]
                  [javax.servlet/javax.servlet-api "3.0.1" :scope "provided"]
                  [org.opensaml/opensaml "2.6.4"]]
+
   :pedantic? :abort
+
   :plugins [[lein-codox "0.10.6"]
             [lein-cloverage "1.0.6"]]
+
   :codox {:namespaces [ring.middleware.okta]
           :output-path "../ring-okta-doc"}
+
   :profiles {:dev {:resource-paths ["test-resources"]}
              :1.5 {:resource-paths ["test-resources"]
                    :dependencies [[org.clojure/clojure "1.5.1"]]}
@@ -42,6 +46,7 @@
                    :dependencies [[org.clojure/clojure "1.9.0"]]}
              :1.10 {:resource-paths ["test-resources"]
                    :dependencies [[org.clojure/clojure "1.10.0"]]}}
+
   :aliases {"test-all-profiles" ["with-profile" "dev:1.5:1.6:1.7:1.8:1.9:1.10" "test"]
             "cloverage" ["do" "cloverage" "--output" "doc/coverage"]
             "release" ["do" "clean," "deploy" "clojars"]})
