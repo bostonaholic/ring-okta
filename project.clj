@@ -38,7 +38,8 @@
             [lein-cloverage "1.1.1"]]
 
   :codox {:namespaces [ring.middleware.okta]
-          :output-path "../ring-okta-doc"}
+          :output-path "../ring-okta-doc"
+          :source-uri "https://github.com/bostonaholic/ring-okta/blob/v{version}/{filepath}#L{line}"}
 
   :profiles {:dev {:resource-paths ["test-resources"]}
              :1.8 {:resource-paths ["test-resources"]
