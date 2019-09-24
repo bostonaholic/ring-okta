@@ -60,7 +60,7 @@ the `project.clj` for the version of the SAML Toolkit to download from Okta.
 
 - [API Docs](http://bostonaholic.github.io/ring-okta/index.html)
 
-The documentation is built with [codox](https://github.com/weavejester/codox) (`lein doc`) and published to
+The documentation is built with [codox](https://github.com/weavejester/codox) (`lein codox`) and published to
 the [gh-pages](https://github.com/bostonaholic/ring-okta/tree/gh-pages) branch.
 
 ## Test Coverage
