@@ -18,7 +18,7 @@
 
                  ;; This is required because CircleCI uses leiningen 2.8.2
                  ;; FIXME: cloverage should only be in dev profile
-                 [cloverage "1.1.1" :exclusions [org.clojure/clojure
+                 [cloverage "1.1.2" :exclusions [org.clojure/clojure
                                                  org.clojure/tools.reader]]
 
                  ;; okta dependencies -- some are not specified in their pom,
@@ -38,7 +38,7 @@
 
   :plugins [[lein-ancient "0.6.15"]
             [lein-codox "0.10.6"]
-            [lein-cloverage "1.1.1"]]
+            [lein-cloverage "1.1.2"]]
 
   :codox {:namespaces [ring.middleware.okta]
           :output-path "../ring-okta-doc"
