@@ -34,7 +34,8 @@
 
   :pedantic? :abort
 
-  :plugins [[lein-codox "0.10.6"]
+  :plugins [[lein-ancient "0.6.15"]
+            [lein-codox "0.10.6"]
             [lein-cloverage "1.1.1"]]
 
   :codox {:namespaces [ring.middleware.okta]
