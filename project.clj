@@ -17,12 +17,14 @@
                  [com.okta/saml-toolkit "1.0.12-000170-c7ed721"]
 
                  ;; This is required because CircleCI uses leiningen 2.8.2
+                 ;; FIXME: cloverage should only be in dev profile
                  [cloverage "1.1.1" :exclusions [org.clojure/clojure
                                                  org.clojure/tools.reader]]
 
                  ;; okta dependencies -- some are not specified in their pom,
                  ;; others are borked because of our weird local repo thing that
                  ;; we do in order to please the Travis-CI gods
+                 ;; FIXME: check if local repo is needed on CircleCI
                  [com.sun.xml.parsers/jaxp-ri "1.4.5"]
                  [org.slf4j/slf4j-api "1.6.1" :scope "provided"]
                  [org.slf4j/slf4j-simple "1.6.1" :scope "test"]
