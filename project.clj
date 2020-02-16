@@ -4,7 +4,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :repositories {"local" ~(str (.toURI (java.io.File. "maven_repository")))}
-  :dependencies [[org.clojure/clojure "1.10.0" :scope "provided"]
+  :dependencies [[org.clojure/clojure "1.10.1" :scope "provided"]
                  [org.clojure/core.incubator "0.1.4"]
                  [ring/ring-core "1.8.0" :scope "provided" :exclusions [commons-codec
                                                                         joda-time
@@ -50,7 +50,7 @@
              :1.9 {:resource-paths ["test-resources"]
                    :dependencies [[org.clojure/clojure "1.9.0"]]}
              :1.10 {:resource-paths ["test-resources"]
-                   :dependencies [[org.clojure/clojure "1.10.0"]]}}
+                   :dependencies [[org.clojure/clojure "1.10.1"]]}}
 
   :aliases {"test-all-profiles" ["with-profile" "dev:1.8:1.9:1.10" "test"]
             "cloverage" ["do" "cloverage" "--output" "doc/coverage"]
