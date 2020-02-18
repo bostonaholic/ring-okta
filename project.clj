@@ -14,7 +14,7 @@
                                                  joda-time
                                                  org.clojure/clojure]]
                  [org.clojure/data.codec "0.1.1" :exclusions [org.clojure/clojure]]
-                 [com.okta/saml-toolkit "1.0.12-000170-c7ed721"]
+                 [com.okta/saml-toolkit "1.0.12-000170-c7ed721" :upgrade :okta]
 
                  ;; This is required because CircleCI uses leiningen 2.8.2
                  ;; FIXME: cloverage should only be in dev profile
@@ -25,14 +25,14 @@
                  ;; others are borked because of our weird local repo thing that
                  ;; we do in order to please the Travis-CI gods
                  ;; FIXME: check if local repo is needed on CircleCI
-                 [com.sun.xml.parsers/jaxp-ri "1.4.5"]
-                 [org.slf4j/slf4j-api "1.6.1" :scope "provided"]
-                 [org.slf4j/slf4j-simple "1.6.1" :scope "test"]
-                 [com.google.inject/guice "3.0"]
-                 [org.bouncycastle/bcprov-jdk16 "1.45"]
-                 [org.apache.commons/commons-lang3 "3.0"]
-                 [javax.servlet/javax.servlet-api "3.0.1" :scope "provided"]
-                 [org.opensaml/opensaml "2.6.4"]]
+                 [com.sun.xml.parsers/jaxp-ri "1.4.5" :upgrade :okta]
+                 [org.slf4j/slf4j-api "1.6.1" :scope "provided" :upgrade :okta]
+                 [org.slf4j/slf4j-simple "1.6.1" :scope "test" :upgrade :okta]
+                 [com.google.inject/guice "3.0" :upgrade :okta]
+                 [org.bouncycastle/bcprov-jdk16 "1.45" :upgrade :okta]
+                 [org.apache.commons/commons-lang3 "3.0" :upgrade :okta]
+                 [javax.servlet/javax.servlet-api "3.0.1" :scope "provided" :upgrade :okta]
+                 [org.opensaml/opensaml "2.6.4" :upgrade :okta]]
 
   :pedantic? :abort
 

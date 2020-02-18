@@ -44,7 +44,7 @@ jobs:
           keys:
             - v1-m2-{{ .Branch }}-{{ checksum "project.clj" }}
 
-      - run: lein ancient :all
+      - run: lein ancient :all :exclude okta
 
 workflows:
   build_and_test:
