@@ -92,7 +92,7 @@ See [Creating Project Pages manually](https://help.github.com/articles/creating-
 
 ## License
 
-Copyright © 2019 Matthew Boston
+Copyright © 2020 Matthew Boston
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
