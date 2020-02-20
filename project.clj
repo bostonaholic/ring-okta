@@ -16,11 +16,6 @@
                  [org.clojure/data.codec "0.1.1" :exclusions [org.clojure/clojure]]
                  [com.okta/saml-toolkit "1.0.12-000170-c7ed721" :upgrade :okta]
 
-                 ;; This is required because CircleCI uses leiningen 2.8.2
-                 ;; FIXME: cloverage should only be in dev profile
-                 [cloverage "1.1.2" :exclusions [org.clojure/clojure
-                                                 org.clojure/tools.reader]]
-
                  ;; okta dependencies -- some are not specified in their pom,
                  ;; others are borked because of our weird local repo thing that
                  ;; we do in order to please the Travis-CI gods
@@ -44,7 +39,8 @@
           :output-path "../ring-okta-doc"
           :source-uri "https://github.com/bostonaholic/ring-okta/blob/v{version}/{filepath}#L{line}"}
 
-  :profiles {:dev {:resource-paths ["test-resources"]}
+  :profiles {:dev {:resource-paths ["test-resources"]
+                   :dependencies [[cloverage "1.1.2"]]}
              :1.8 {:resource-paths ["test-resources"]
                    :dependencies [[org.clojure/clojure "1.8.0"]]}
              :1.9 {:resource-paths ["test-resources"]
