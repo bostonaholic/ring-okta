@@ -6,14 +6,10 @@
   :repositories {"local" ~(str (.toURI (java.io.File. "maven_repository")))}
   :dependencies [[org.clojure/clojure "1.10.1" :scope "provided"]
                  [org.clojure/core.incubator "0.1.4"]
-                 [ring/ring-core "1.8.0" :scope "provided" :exclusions [commons-codec
-                                                                        joda-time
-                                                                        org.clojure/clojure]]
+                 [ring/ring-core "1.8.0" :scope "provided" :exclusions [commons-codec]]
                  [ring-mock "0.1.5" :scope "test"]
-                 [compojure "1.6.1" :exclusions [commons-codec
-                                                 joda-time
-                                                 org.clojure/clojure]]
-                 [org.clojure/data.codec "0.1.1" :exclusions [org.clojure/clojure]]
+                 [compojure "1.6.1" :exclusions [commons-codec joda-time]]
+                 [org.clojure/data.codec "0.1.1"]
                  [com.okta/saml-toolkit "1.0.12-000170-c7ed721" :upgrade :okta]
 
                  ;; okta dependencies -- some are not specified in their pom,
