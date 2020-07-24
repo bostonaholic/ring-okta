@@ -60,8 +60,7 @@ the `project.clj` for the version of the SAML Toolkit to download from Okta.
 
 - [API Docs](http://bostonaholic.github.io/ring-okta/index.html)
 
-The documentation is built with [codox](https://github.com/weavejester/codox) (`lein codox`) and published to
-the [gh-pages](https://github.com/bostonaholic/ring-okta/tree/gh-pages) branch.
+The documentation is built with [codox](https://github.com/weavejester/codox) (`lein codox`) and published to `/.docs` which ends up being hosted by GitHub Pages.
 
 ## Test Coverage
 
@@ -74,21 +73,6 @@ As described in **Usage** above, the Okta SAML Toolkit must be downloaded and in
 ```
 $ mvn install:install-file -Dfile=saml-toolkit.jar -DgroupId=com.okta -DartifactId=saml-toolkit -Dpackaging=jar -Dversion=<version> -DcreateChecksum=true -DupdateReleaseInfo=true -DgeneratePom=true -DlocalRepositoryPath=/path/to/localRepo
 ```
-
-### Generating API Docs
-
-The `lein codox` command is configured in `project.clj` to output documentation to `../ring-okta-doc`. This should be configured to be the `gh-pages` branch so the API docs can be hosted on GitHub.
-
-```
-~/code
-  |- ring-okta
-  |- ring-okta-doc
-  ...
-```
-
-Once `lein doc` is run in `ring-okta`, you can commit the changes in `ring-okta-doc` to the `gh-pages` branch of this repository.
-
-See [Creating Project Pages manually](https://help.github.com/articles/creating-project-pages-manually/).
 
 ## License
 
