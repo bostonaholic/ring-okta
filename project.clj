@@ -45,5 +45,5 @@
                    :dependencies [[org.clojure/clojure "1.10.1"]]}}
 
   :aliases {"test-all-profiles" ["with-profile" "dev:1.8:1.9:1.10" "test"]
-            "cloverage" ["do" "cloverage" "--output" "doc/coverage"]
+            "cloverage" ["do" "cloverage" "--output" "docs/coverage"]
             "release" ["do" "clean," "deploy" "clojars"]})
