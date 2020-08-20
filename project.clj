@@ -29,14 +29,14 @@
 
   :plugins [[lein-ancient "0.6.15"]
             [lein-codox "0.10.7"]
-            [lein-cloverage "1.1.2"]]
+            [lein-cloverage "1.2.0"]]
 
   :codox {:namespaces [ring.middleware.okta]
           :output-path "./docs"
           :source-uri "https://github.com/bostonaholic/ring-okta/blob/v{version}/{filepath}#L{line}"}
 
   :profiles {:dev {:resource-paths ["test-resources"]
-                   :dependencies [[cloverage "1.1.2"]]}
+                   :dependencies [[cloverage "1.2.0" :exclusions [org.clojure/tools.namespace]]]}
              :1.8 {:resource-paths ["test-resources"]
                    :dependencies [[org.clojure/clojure "1.8.0"]]}
              :1.9 {:resource-paths ["test-resources"]
