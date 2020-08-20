@@ -8,7 +8,7 @@
                  [org.clojure/core.incubator "0.1.4"]
                  [ring/ring-core "1.8.1" :scope "provided" :exclusions [commons-codec]]
                  [ring-mock "0.1.5" :scope "test"]
-                 [compojure "1.6.1" :exclusions [commons-codec joda-time]]
+                 [compojure "1.6.2" :exclusions [org.clojure/clojure commons-codec joda-time]]
                  [org.clojure/data.codec "0.1.1"]
                  [com.okta/saml-toolkit "1.0.12-000170-c7ed721" :upgrade :okta]
 
