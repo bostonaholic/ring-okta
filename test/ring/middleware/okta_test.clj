@@ -58,6 +58,11 @@
               response (handler (request :get "/foo"))]
           (is (= "/foo" (-> response :body :uri)))))
 
+      (testing "with :skip-routes as a base root defined"
+        (let [handler (wrap-okta default-handler okta-home {:skip-routes [:get "/foo"]})
+              response (handler (request :get "/foo/bar"))]
+          (is (= "/foo/bar" (-> response :body :uri)))))
+
       (testing "without :skip-routes defined"
         (let [handler (wrap-okta default-handler okta-home)
               response (handler (request :get "/foo"))]

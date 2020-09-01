@@ -1,5 +1,6 @@
 (ns ring.ring-okta.predicates
-  (:require [ring.util.request :as ring-request]))
+  (:require [ring.util.request :as ring-request]
+            [clojure.string :as str]))
 
 (def not-nil? (comp not nil?))
 
@@ -17,7 +18,7 @@
 (defn- match-pair? [[skip-method skip-path] request-method request-path]
   (and (or (= :any skip-method)
            (= skip-method request-method))
-       (= skip-path request-path)))
+       (str/starts-with? request-path skip-path)))
 
 (defn skip-route? [{:keys [request-method] :as request} skip-routes]
   (when skip-routes
