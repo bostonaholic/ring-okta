@@ -58,10 +58,24 @@
               response (handler (request :get "/foo"))]
           (is (= "/foo" (-> response :body :uri)))))
 
-      (testing "with :skip-routes as a base root defined"
-        (let [handler (wrap-okta default-handler okta-home {:skip-routes [:get "/foo"]})
+      (testing "with :skip-routes - blocks only defined path"
+        (let [handler (wrap-okta default-handler okta-home {:skip-routes [:get "/foo/bar"]})
               response (handler (request :get "/foo/bar"))]
           (is (= "/foo/bar" (-> response :body :uri)))))
+
+      (testing "with :skip-routes - blocks only defined path"
+        (let [handler (wrap-okta default-handler okta-home {:skip-routes [:get "/foo"]})
+              response (handler (request :get "/foo/bar"))]
+          (is (= nil (-> response :body :uri)))))
+
+      (testing "with :skip-routes - blocks path defined in regex"
+        (let [handler (wrap-okta default-handler okta-home {:skip-routes [:get "/foo/\\S*"]})]
+          (is (= "/foo/" (-> (handler (request :get "/foo/")) :body :uri)))
+          (is (= "/foo/bar" (-> (handler (request :get "/foo/bar")) :body :uri)))
+          (is (= "/foo/bar/foo" (-> (handler (request :get "/foo/bar/foo")) :body :uri)))
+
+          (is (= nil (-> (handler (request :get "/foo")) :body :uri)))
+          (is (= nil (-> (handler (request :get "/bar/foo")) :body :uri)))))
 
       (testing "without :skip-routes defined"
         (let [handler (wrap-okta default-handler okta-home)
@@ -71,12 +85,6 @@
       (testing "with :force-user defined"
         (let [handler (wrap-okta default-handler okta-home {:force-user "foo@bar.com"
                                                             :skip-routes [:get "/foo"]})
-              response (handler (request :get "/foo"))]
-          (is (= "foo@bar.com" (-> response :body :session :okta/user))))))
-
-    (testing "#force-user"
-      (testing "with :force-user defined"
-        (let [handler (wrap-okta default-handler okta-home {:force-user "foo@bar.com"})
               response (handler (request :get "/foo"))]
           (is (= "foo@bar.com" (-> response :body :session :okta/user)))))
 
