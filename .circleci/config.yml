@@ -35,6 +35,9 @@ jobs:
 
       - run: lein cloverage
 
+      - store_artifacts:
+          path: ~/ring-okta/docs/coverage
+
   ancient:
     <<: *defaults
     steps:
