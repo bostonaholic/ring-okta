@@ -39,8 +39,8 @@
   :redirect-after-logout - the destination URL to be redirected to after a `POST /logout`
                            (defaults to \"/\")
 
-  :skip-routes           - a list of routes to skip Okta authentication
-                           e.g. [:get \"/about\" :any \"/contact\"]
+  :skip-routes           - a list of routes as a string or regex to skip Okta authentication
+                           e.g. [:get \"/about\" :any \"/contact\" :get \"/home/\\S+\"]
 
   :force-user            - a default user to be used for development"
 
