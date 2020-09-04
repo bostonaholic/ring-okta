@@ -86,6 +86,12 @@
         (let [handler (wrap-okta default-handler okta-home {:force-user "foo@bar.com"
                                                             :skip-routes [:get "/foo"]})
               response (handler (request :get "/foo"))]
+          (is (= "foo@bar.com" (-> response :body :session :okta/user))))))
+
+      (testing "#force-user"
+            (testing "with :force-user defined"
+                   (let [handler (wrap-okta default-handler okta-home {:force-user "foo@bar.com"})
+                                                 response (handler (request :get "/foo"))]
           (is (= "foo@bar.com" (-> response :body :session :okta/user)))))
 
       (testing "without :force-user defined"
