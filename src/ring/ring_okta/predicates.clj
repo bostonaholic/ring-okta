@@ -1,6 +1,5 @@
 (ns ring.ring-okta.predicates
-  (:require [ring.util.request :as ring-request]
-            [clojure.string :as str]))
+  (:require [ring.util.request :as ring-request]))
 
 (def not-nil? (comp not nil?))
 
