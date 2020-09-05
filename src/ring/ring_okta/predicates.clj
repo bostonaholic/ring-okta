@@ -17,7 +17,7 @@
 (defn- match-pair? [[skip-method skip-path] request-method request-path]
   (and (or (= :any skip-method)
            (= skip-method request-method))
-       (= skip-path request-path)))
+       (not-nil? (re-matches (re-pattern skip-path) request-path))))
 
 (defn skip-route? [{:keys [request-method] :as request} skip-routes]
   (when skip-routes
