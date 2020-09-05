@@ -70,6 +70,33 @@ As described in **Usage** above, the Okta SAML Toolkit must be downloaded and in
 $ mvn install:install-file -Dfile=saml-toolkit.jar -DgroupId=com.okta -DartifactId=saml-toolkit -Dpackaging=jar -Dversion=<version> -DcreateChecksum=true -DupdateReleaseInfo=true -DgeneratePom=true -DlocalRepositoryPath=/path/to/localRepo
 ```
 
+## Releases
+
+`ring-okta` is released on no particular schedule. New versions are released as needed when features are added or bugs are fixed.
+
+Refer to the [CHANGELOG](./CHANGELOG) for all version releases and the included changes.
+
+The process for releasing a new version is as follows:
+
+#### Pre-steps
+
+1. Bump version in project.clj following [Semantic Versioning 2.0.0](https://semver.org/)
+2. Bump version in [README.md](./README.md) to match `project.clj`
+3. Add changes to [CHANGELOG](./CHANGELOG) following [keep a changelog](https://keepachangelog.com/en/1.0.0/)
+3. Generate API docs with `lein codox`
+
+#### Release
+
+1. Commit changes with commit message `Release v<version>`
+2. Tag the commit with `git tag v<version>`
+3. Push changes to GitHub
+4. Deploy release to [Clojars](https://clojars.org) with `lein deploy clojars`
+
+#### Post-steps
+
+1. Bump patch version of `project.clj` to next `-SNAPSHOT`
+2. Commit snapshot version with commit message `<version>`
+
 ## License
 
 Copyright © 2020 Matthew Boston
