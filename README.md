@@ -74,7 +74,7 @@ $ mvn install:install-file -Dfile=saml-toolkit.jar -DgroupId=com.okta -Dartifact
 
 `ring-okta` is released on no particular schedule. New versions are released as needed when features are added or bugs are fixed.
 
-Refer to the [CHANGELOG](./CHANGELOG) for all version releases and the included changes.
+Refer to the [CHANGELOG.md](./CHANGELOG.md) for all version releases and the included changes.
 
 The process for releasing a new version is as follows:
 
@@ -82,7 +82,7 @@ The process for releasing a new version is as follows:
 
 1. Bump version in project.clj following [Semantic Versioning 2.0.0](https://semver.org/)
 2. Bump version in [README.md](./README.md) to match `project.clj`
-3. Add changes to [CHANGELOG](./CHANGELOG) following [keep a changelog](https://keepachangelog.com/en/1.0.0/)
+3. Add changes to [CHANGELOG.md](./CHANGELOG.md) following [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 3. Generate API docs with `lein codox`
 
 #### Release
