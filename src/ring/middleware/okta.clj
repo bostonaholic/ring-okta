@@ -47,7 +47,7 @@
   {:arglists '([handler okta-home] [handler okta-home options]) :added "0.1.0"}
 
   ([handler okta-home] (wrap-okta handler okta-home {}))
-  
+
   ([handler okta-home {:keys [okta-config redirect-after-logout]
                        :or {okta-config (io/resource "okta-config.xml")
                             redirect-after-logout "/"}
