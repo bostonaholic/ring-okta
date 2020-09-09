@@ -89,7 +89,7 @@ The process for releasing a new version is as follows:
 
 1. Commit changes with commit message `Release v<version>`
 2. Tag the commit with `git tag v<version>`
-3. Push changes to GitHub
+3. Push changes to GitHub (including new tag with `--tags` option)
 4. Deploy release to [Clojars](https://clojars.org) with `lein deploy clojars`
 
 #### Post-steps
