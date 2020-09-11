@@ -10,7 +10,7 @@
 
 (def okta-home "https://company.okta.com")
 (def default-okta-config "okta-config.xml")
-(def custom-okta-config "custom-okta-config.xml")
+(def custom-okta-config "test-resources/custom-okta-config.xml")
 
 (deftest test-wrap-okta
   (let [default-handler #(response %)]

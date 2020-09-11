@@ -128,10 +128,10 @@
                 041&nbsp;&nbsp;
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                042&nbsp;&nbsp;&nbsp;&nbsp;:skip-routes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;a&nbsp;list&nbsp;of&nbsp;routes&nbsp;to&nbsp;skip&nbsp;Okta&nbsp;authentication
+                042&nbsp;&nbsp;&nbsp;&nbsp;:skip-routes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;a&nbsp;list&nbsp;of&nbsp;routes&nbsp;as&nbsp;a&nbsp;string&nbsp;or&nbsp;regex&nbsp;to&nbsp;skip&nbsp;Okta&nbsp;authentication
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                043&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.g.&nbsp;[:get&nbsp;\&quot;&#x2F;about\&quot;&nbsp;:any&nbsp;\&quot;&#x2F;contact\&quot;]
+                043&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.g.&nbsp;[:get&nbsp;\&quot;&#x2F;about\&quot;&nbsp;:any&nbsp;\&quot;&#x2F;contact\&quot;&nbsp;:get&nbsp;\&quot;&#x2F;home&#x2F;\\S+\&quot;]
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
                 044&nbsp;&nbsp;
@@ -151,8 +151,8 @@
 <span class="covered" title="5 out of 5 forms covered">
                 049&nbsp;&nbsp;&nbsp;&nbsp;([handler&nbsp;okta-home]&nbsp;(wrap-okta&nbsp;handler&nbsp;okta-home&nbsp;{}))
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                050&nbsp;&nbsp;&nbsp;&nbsp;
+<span class="blank" title="0 out of 0 forms covered">
+                050&nbsp;&nbsp;
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
                 051&nbsp;&nbsp;&nbsp;&nbsp;([handler&nbsp;okta-home&nbsp;{:keys&nbsp;[okta-config&nbsp;redirect-after-logout]
