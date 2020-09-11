@@ -29,11 +29,22 @@
 
   :plugins [[lein-ancient "0.6.15"]
             [lein-codox "0.10.7"]
-            [lein-cloverage "1.2.0"]]
+            [lein-cloverage "1.2.0"]
+            [lein-nvd "1.4.1" :exclusions [com.fasterxml.jackson.core/jackson-annotations
+                                           commons-io
+                                           org.apache.commons/commons-lang3
+                                           org.clojure/clojure
+                                           org.slf4j/jcl-over-slf4j
+                                           org.slf4j/slf4j-api]]]
 
   :codox {:namespaces [ring.middleware.okta]
           :output-path "./docs"
           :source-uri "https://github.com/bostonaholic/ring-okta/blob/v{version}/{filepath}#L{line}"}
+
+  :nvd {:data-directory "/tmp/nvd/data"
+        :verbose-summary true
+        ;; Only fail for High and Critical
+        :fail-threshold 7}
 
   :profiles {:dev {:resource-paths ["test-resources"]
                    :dependencies [[cloverage "1.2.0"]]}

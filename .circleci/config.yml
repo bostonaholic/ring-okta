@@ -1,0 +1,117 @@
+version: 2.1
+
+defaults: &defaults
+  working_directory: ~/ring-okta
+  docker:
+    - image: clojure:lein-2.9.1
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-m2-{{ .Branch }}-{{ checksum "project.clj" }}
+
+      - run: lein deps
+
+      - save_cache:
+          key: v1-m2-{{ .Branch }}-{{ checksum "project.clj" }}
+          paths:
+            - "~/.m2"
+
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-m2-{{ .Branch }}-{{ checksum "project.clj" }}
+
+      - run: lein test-all-profiles
+
+      - run: lein cloverage
+
+      - store_artifacts:
+          path: ~/ring-okta/docs/coverage
+
+  nvd:
+    <<: *defaults
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-m2-{{ .Branch }}-{{ checksum "project.clj" }}
+
+      - restore_cache:
+          keys:
+            - v1-nvd-{{ .Branch }}-{{ checksum "project.clj" }}
+            - v1-nvd-
+
+      - run:
+          name: Download NVD data
+          command: lein nvd update
+
+      - save_cache:
+          key: v1-nvd-{{ .Branch }}-{{ checksum "project.clj" }}
+          paths: /tmp/nvd/data
+
+      - run:
+          name: Run NVD checking
+          command: lein nvd check
+
+      - store_artifacts:
+          path: ~/ring-okta/target/nvd
+
+
+  ancient:
+    <<: *defaults
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-m2-{{ .Branch }}-{{ checksum "project.clj" }}
+
+      - run: lein ancient :all :exclude okta
+
+workflows:
+  build_and_test:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: gh-pages
+      - nvd
+      - test:
+          filters:
+            branches:
+              ignore: gh-pages
+          requires:
+            - build
+
+  monthly_deps_check:
+    jobs:
+      - ancient
+    triggers:
+      - schedule:
+          # At 01:19 on day-of-month 20
+          cron: "19 1 20 * *"
+          filters:
+            branches:
+              only: master
+
+  monthly_nvd_check:
+    jobs:
+      - nvd
+    triggers:
+      - schedule:
+          # At 01:19 on day-of-month 4
+          cron: "19 1 4 * *"
+          filters:
+            branches:
+              only: master
