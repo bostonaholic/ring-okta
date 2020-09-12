@@ -1,6 +1,6 @@
 (ns ring.ring-okta.session-test
   (:require [clojure.test :refer [deftest testing is]]
-            [ring.ring-okta.saml :refer [login logout]]
+            [ring.ring-okta.saml :as saml]
             [ring.ring-okta.session :as session]))
 
 (defn- stub-respond-to-okta-post [& args]
@@ -9,20 +9,20 @@
 
 (deftest test-login
   (let [request {:params {} :okta-config-location "okta-config.xml"}]
-    (with-redefs [ring.ring-okta.saml/respond-to-okta-post stub-respond-to-okta-post]
+    (with-redefs [saml/respond-to-okta-post stub-respond-to-okta-post]
       (testing "user placed in session"
-        (is (= "foo@bar.com" (-> (login request) :session :okta/user))))
+        (is (= "foo@bar.com" (-> (session/login request) :session :okta/user))))
 
       (testing "redirect after login"
-        (is (= 303 (-> (login request) :status)))
-        (is (= "http://foo.bar.com" (-> (login request) :headers (get "Location"))))))))
+        (is (= 303 (-> (session/login request) :status)))
+        (is (= "http://foo.bar.com" (-> (session/login request) :headers (get "Location"))))))))
 
 (deftest test-logout
   (let [request {:params {:foo "foo"}
                  :session {:okta/user "foo@bar.com"
                            :bar "bar"}}]
     (testing "logout removes only :okta/user from session"
-      (is (= {:bar "bar"} (-> (logout request) :session))))
+      (is (= {:bar "bar"} (-> (session/logout request) :session))))
 
     (testing "logout does not clear other items in the request"
-      (is (= {:params {:foo "foo"} :session {:bar "bar"}} (logout request))))))
+      (is (= {:params {:foo "foo"} :session {:bar "bar"}} (session/logout request))))))
