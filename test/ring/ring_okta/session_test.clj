@@ -7,9 +7,6 @@
   {:redirect-url "http://foo.bar.com"
    :authenticated-user-email "foo@bar.com"})
 
-(defn- stub-redirect-after-post [& args]
-  {})
-
 (deftest test-login
   (let [request {:params {} :okta-config-location "okta-config.xml"}]
     (with-redefs [ring.ring-okta.saml/respond-to-okta-post stub-respond-to-okta-post]
