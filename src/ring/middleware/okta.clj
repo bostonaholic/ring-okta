@@ -1,10 +1,10 @@
 (ns ring.middleware.okta
   "Ring middleware for Okta Single Sign-on"
   (:require [clojure.java.io :as io]
-            [ring.util.response :as ring-response]
             [compojure.core :refer [POST defroutes]]
+            [ring.ring-okta.predicates :as p]
             [ring.ring-okta.session :as okta-session]
-            [ring.ring-okta.predicates :as p]))
+            [ring.util.response :as ring-response]))
 
 (defroutes okta-routes
   "The compojure routes for Okta

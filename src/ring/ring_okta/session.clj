@@ -1,7 +1,7 @@
 (ns ring.ring-okta.session
-  (:require [ring.ring-okta.saml :as saml]
-            [clojure.core.incubator :refer [dissoc-in]]
+  (:require [clojure.core.incubator :refer [dissoc-in]]
             [clojure.java.io :as io]
+            [ring.ring-okta.saml :as saml]
             [ring.util.response :as response]))
 
 (defn login [{:keys [okta-config-location params]}]

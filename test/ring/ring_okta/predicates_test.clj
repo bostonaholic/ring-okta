@@ -1,8 +1,8 @@
 (ns ring.ring-okta.predicates-test
   (:require [clojure.test :refer [deftest testing is]]
             [clojure.test.helpers :refer [is-not]]
-            [ring.ring-okta.predicates :as p]
-            [ring.mock.request :refer [request]]))
+            [ring.mock.request :refer [request]]
+            [ring.ring-okta.predicates :as p]))
 
 (deftest test-login?
   (testing "match method and route"

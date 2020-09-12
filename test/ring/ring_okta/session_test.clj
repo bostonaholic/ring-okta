@@ -1,6 +1,7 @@
 (ns ring.ring-okta.session-test
   (:require [clojure.test :refer [deftest testing is]]
-            [ring.ring-okta.session :refer [login logout]]))
+            [ring.ring-okta.saml :refer [login logout]]
+            [ring.ring-okta.session :as session]))
 
 (defn- stub-respond-to-okta-post [& args]
   {:redirect-url "http://foo.bar.com"

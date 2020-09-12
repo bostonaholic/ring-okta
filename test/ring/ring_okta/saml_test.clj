@@ -1,6 +1,6 @@
 (ns ring.ring-okta.saml-test
-  (:require [clojure.test :refer [deftest testing is]]
-            [clojure.java.io :as io]
+  (:require [clojure.java.io :as io]
+            [clojure.test :refer [deftest testing is]]
             [ring.ring-okta.saml :refer [respond-to-okta-post]]))
 
 (deftest test-respond-to-okta-post
