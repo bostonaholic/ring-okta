@@ -1,0 +1,55 @@
+name: Monthly Deps Check
+
+on:
+  schedule:
+    # At 01:19 on day-of-month 20
+    cron: "19 1 20 * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache maven dependencies
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-maven-deps
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/project.clj') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - name: Install dependencies
+      run: lein deps
+
+  ancient:
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache maven dependencies
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-maven-deps
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/project.clj') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - name: Install dependencies
+      run: lein deps
+
+    - name: Check ancient deps
+      run: lein ancient :all :exclude okta
