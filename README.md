@@ -1,6 +1,6 @@
 # ring-okta
 
-[![CircleCI](https://circleci.com/gh/bostonaholic/ring-okta/tree/master.svg?style=svg)](https://circleci.com/gh/bostonaholic/ring-okta/tree/master)
+![Build and Test](https://github.com/bostonaholic/ring-okta/workflows/Build%20and%20Test/badge.svg?branch=master)
 
 Ring middleware for Okta Single Sign-on.
 
