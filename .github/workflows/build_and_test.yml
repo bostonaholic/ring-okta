@@ -55,6 +55,12 @@ jobs:
     - name: Run tests
       run: lein test-all-profiles
 
-    # TODO: Persist coverage reports
     - name: Run code coverage
       run: lein cloverage
+
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage
+        path: docs/coverage
+
