@@ -15,7 +15,7 @@
                  ;; okta dependencies -- some are not specified in their pom,
                  ;; others are borked because of our weird local repo thing that
                  ;; we do in order to please the Travis-CI gods
-                 ;; FIXME: check if local repo is needed on CircleCI
+                 ;; FIXME: check if local repo is needed on GitHub Actions
                  [com.sun.xml.parsers/jaxp-ri "1.4.5" :upgrade :okta]
                  [org.slf4j/slf4j-api "1.6.1" :scope "provided" :upgrade :okta]
                  [org.slf4j/slf4j-simple "1.6.1" :scope "test" :upgrade :okta]
