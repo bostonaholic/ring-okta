@@ -23,9 +23,13 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    # TODO: Restore deps
-
     steps:
+    - uses: actions/checkout@v2
+
+    # TODO: Restore deps
+    - name: Install dependencies
+      run: lein deps
+
     - name: Run tests
       run: lein test-all-profiles
 
