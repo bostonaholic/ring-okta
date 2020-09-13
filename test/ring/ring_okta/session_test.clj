@@ -8,7 +8,7 @@
    :authenticated-user-email "foo@bar.com"})
 
 (deftest test-login
-  (let [request {:params {} :okta-config-location "okta-config.xml"}]
+  (let [request {:params {} :okta-config-location "test-resources/okta-config.xml"}]
     (with-redefs [saml/respond-to-okta-post stub-respond-to-okta-post]
       (testing "user placed in session"
         (is (= "foo@bar.com" (-> (session/login request) :session :okta/user))))
