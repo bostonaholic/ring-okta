@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/) and [semver.org](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- n/a
+
+## [0.5.0] - 2020-09-13
+### Fixed
 - Allow `:okta-config` to be present outside of bundled jar, [\#4](https://github.com/bostonaholic/ring-okta/pull/4) by [@ravik-karn-tw](https://github.com/ravik-karn-tw).
 
 ## [0.4.0] - 2020-09-05
@@ -72,7 +76,8 @@ All notable changes to this project will be documented in this file. This change
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/bostonaholic/ring-okta/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/bostonaholic/ring-okta/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/bostonaholic/ring-okta/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/bostonaholic/ring-okta/compare/v0.3.0...v0.3.1
