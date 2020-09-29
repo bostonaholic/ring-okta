@@ -30,7 +30,7 @@ compile "bostonaholic:ring-okta:0.5.0"
 
 ### Okta SAML Toolkit Dependency
 
-Since Okta doesn't publish the SAML Toolkit for Java, you must download it [here](https://support.okta.com/entries/25009573-Current-SAML-Toolkit-for-Java-Version). You then must `mvn install` it to your local maven repository. Check the `project.clj` for the version of the SAML Toolkit to download from Okta.
+Since Okta doesn't publish the SAML Toolkit for Java, you must download it [here](https://support.okta.com/entries/25009573-Current-SAML-Toolkit-for-Java-Version). You then must `mvn install` it to your local maven repository. Check the [project.clj](./project.clj) for the version of the SAML Toolkit to download from Okta.
 
 ## Usage
 
