@@ -3,7 +3,8 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/) and [semver.org](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- n/a
+### Changed
+- Upgrade ring-core 1.8.2.
 
 ## [0.5.0] - 2020-09-13
 ### Fixed
