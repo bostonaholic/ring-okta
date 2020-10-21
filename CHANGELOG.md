@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file. This change
 ## [Unreleased]
 ### Changed
 - Upgrade ring-core 1.8.2.
+- Upgrade cloverage 1.2.1.
 
 ## [0.5.0] - 2020-09-13
 ### Fixed
