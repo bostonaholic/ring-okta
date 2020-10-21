@@ -22,10 +22,10 @@
 <span class="covered" title="1 out of 1 forms covered">
                 006&nbsp;&nbsp;(defn&nbsp;login?&nbsp;[{:keys&nbsp;[request-method]&nbsp;:as&nbsp;request}]
                 </span><br/>
-<span class="covered" title="10 out of 10 forms covered">
+<span class="covered" title="9 out of 9 forms covered">
                 007&nbsp;&nbsp;&nbsp;&nbsp;(and&nbsp;(=&nbsp;request-method&nbsp;:post)
                 </span><br/>
-<span class="covered" title="4 out of 4 forms covered">
+<span class="covered" title="3 out of 3 forms covered">
                 008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(=&nbsp;(ring-request&#x2F;path-info&nbsp;request)&nbsp;&quot;&#x2F;login&quot;)))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
@@ -34,10 +34,10 @@
 <span class="covered" title="1 out of 1 forms covered">
                 010&nbsp;&nbsp;(defn&nbsp;logout?&nbsp;[{:keys&nbsp;[request-method]&nbsp;:as&nbsp;request}]
                 </span><br/>
-<span class="covered" title="10 out of 10 forms covered">
+<span class="covered" title="9 out of 9 forms covered">
                 011&nbsp;&nbsp;&nbsp;&nbsp;(and&nbsp;(=&nbsp;request-method&nbsp;:post)
                 </span><br/>
-<span class="covered" title="4 out of 4 forms covered">
+<span class="covered" title="3 out of 3 forms covered">
                 012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(=&nbsp;(ring-request&#x2F;path-info&nbsp;request)&nbsp;&quot;&#x2F;logout&quot;)))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
@@ -55,10 +55,10 @@
 <span class="covered" title="1 out of 1 forms covered">
                 017&nbsp;&nbsp;(defn-&nbsp;match-pair?&nbsp;[[skip-method&nbsp;skip-path]&nbsp;request-method&nbsp;request-path]
                 </span><br/>
-<span class="covered" title="14 out of 14 forms covered">
+<span class="covered" title="13 out of 13 forms covered">
                 018&nbsp;&nbsp;&nbsp;&nbsp;(and&nbsp;(or&nbsp;(=&nbsp;:any&nbsp;skip-method)
                 </span><br/>
-<span class="covered" title="3 out of 3 forms covered">
+<span class="covered" title="2 out of 2 forms covered">
                 019&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(=&nbsp;skip-method&nbsp;request-method))
                 </span><br/>
 <span class="covered" title="7 out of 7 forms covered">
