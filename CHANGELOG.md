@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/) and [semver.org](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- n/a
+
+## [0.5.1] - 2020-10-24
 ### Changed
 - Upgrade ring-core 1.8.2.
 - Upgrade cloverage 1.2.1.
@@ -78,7 +81,8 @@ All notable changes to this project will be documented in this file. This change
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/bostonaholic/ring-okta/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/bostonaholic/ring-okta/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/bostonaholic/ring-okta/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/bostonaholic/ring-okta/compare/v0.3.1...v0.3.2
