@@ -1,8 +1,8 @@
 (defproject bostonaholic/ring-okta "0.5.2-SNAPSHOT"
   :description "Ring middleware for Okta Single Sign-on"
   :url "https://github.com/bostonaholic/ring-okta"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :license {:name "The MIT License (MIT)"
+            :url "https://mit-license.org"}
   :repositories {"local" ~(str (.toURI (java.io.File. "maven_repository")))}
   :dependencies [[org.clojure/clojure "1.10.1" :scope "provided"]
                  [org.clojure/core.incubator "0.1.4"]
