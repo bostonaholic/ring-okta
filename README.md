@@ -60,7 +60,7 @@ The documentation is built with [codox](https://github.com/weavejester/codox) (`
 
 ## Test Coverage
 
-The test coverage summary is built with [cloverage](https://github.com/lshift/cloverage) (`lein cloverage`) and hosted [here](https://bostonaholic.github.io/ring-okta/coverage/index.html).
+The test coverage summary is built with [cloverage](https://github.com/lshift/cloverage) (`lein cloverage`) and published to `./docs/coverage` and is hosted [here](https://bostonaholic.github.io/ring-okta/coverage/index.html).
 
 ## Development
 
