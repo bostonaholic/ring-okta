@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/) and [semver.org](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- n/a
+- Upgrade cloverage 1.2.2.
 
 ## [1.0.0] - 2020-10-24
 ### Changed
