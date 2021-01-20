@@ -99,6 +99,6 @@ The process for releasing a new version is as follows:
 
 ## License
 
-Copyright © 2020 Matthew Boston
+Copyright © 2021 Matthew Boston
 
 Released under the MIT License.
