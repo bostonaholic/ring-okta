@@ -9,13 +9,13 @@ Ring middleware for Okta Single Sign-on.
 ### Leiningen
 
 ```
-[bostonaholic/ring-okta "1.0.0"]
+[bostonaholic/ring-okta "1.0.1"]
 ```
 
 ### Gradle
 
 ```
-compile "bostonaholic:ring-okta:1.0.0"
+compile "bostonaholic:ring-okta:1.0.1"
 ```
 
 ### Maven
@@ -24,7 +24,7 @@ compile "bostonaholic:ring-okta:1.0.0"
 <dependency>
   <groupId>bostonaholic</groupId>
   <artifactId>ring-okta</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency
 ```
 
