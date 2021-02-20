@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This change
 ### Changed
 - Upgrade cloverage 1.2.2.
 - Upgrade lein-ancient 0.7.0.
+- Upgrade ring-core 1.9.1.
 
 ## [1.0.0] - 2020-10-24
 ### Changed
