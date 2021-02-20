@@ -27,7 +27,7 @@
 
   :pedantic? :abort
 
-  :plugins [[lein-ancient "0.6.15"]
+  :plugins [[lein-ancient "0.7.0"]
             [lein-codox "0.10.7"]
             [lein-cloverage "1.2.2"]]
 
