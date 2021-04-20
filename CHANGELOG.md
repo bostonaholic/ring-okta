@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/) and [semver.org](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- n/a
+
+## [1.0.2] - 2021-04-20
+### Changed
 - Upgrade ring-core 1.9.2.
 
 ## [1.0.1] - 2021-02-19
@@ -92,7 +96,8 @@ All notable changes to this project will be documented in this file. This change
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/bostonaholic/ring-okta/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/bostonaholic/ring-okta/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/bostonaholic/ring-okta/compare/v0.5.1...v1.0.0
 [0.5.1]: https://github.com/bostonaholic/ring-okta/compare/v0.5.0...v0.5.1

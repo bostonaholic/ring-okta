@@ -1,4 +1,4 @@
-(defproject bostonaholic/ring-okta "1.0.2-SNAPSHOT"
+(defproject bostonaholic/ring-okta "1.0.2"
   :description "Ring middleware for Okta Single Sign-on"
   :url "https://github.com/bostonaholic/ring-okta"
   :license {:name "The MIT License (MIT)"
@@ -25,7 +25,7 @@
                  [javax.servlet/javax.servlet-api "3.0.1" :scope "provided" :upgrade :okta]
                  [org.opensaml/opensaml "2.6.4" :upgrade :okta]]
 
-  :pedantic? :abort
+  #_#_:pedantic? :abort
 
   :plugins [[lein-ancient "0.7.0"]
             [lein-codox "0.10.7"]
