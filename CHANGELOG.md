@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file. This change
 ## [Unreleased]
 - n/a
 
+## [1.0.3] - 2021-05-21
+### Changed
+- Upgrade ring-core 1.9.3.
+
 ## [1.0.2] - 2021-04-20
 ### Changed
 - Upgrade ring-core 1.9.2.
@@ -96,7 +100,8 @@ All notable changes to this project will be documented in this file. This change
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/bostonaholic/ring-okta/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/bostonaholic/ring-okta/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/bostonaholic/ring-okta/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/bostonaholic/ring-okta/compare/v0.5.1...v1.0.0
