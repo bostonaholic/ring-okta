@@ -15,7 +15,7 @@ Ring middleware for Okta Single Sign-on.
 ### Gradle
 
 ```
-compile "bostonaholic:ring-okta:1.0.4"
+implementation("bostonaholic:ring-okta:1.0.4")
 ```
 
 ### Maven
