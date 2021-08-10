@@ -12,6 +12,12 @@ Ring middleware for Okta Single Sign-on.
 [bostonaholic/ring-okta "1.0.4"]
 ```
 
+### Clojure CLI/deps.edn
+
+```
+bostonaholic/ring-okta {:mvn/version "1.0.4"}
+```
+
 ### Gradle
 
 ```
