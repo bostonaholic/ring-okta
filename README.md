@@ -6,7 +6,7 @@ Ring middleware for Okta Single Sign-on.
 
 ## Installation
 
-### Leiningen
+### Leiningen/Boot
 
 ```
 [bostonaholic/ring-okta "1.0.4"]
