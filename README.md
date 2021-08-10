@@ -25,7 +25,7 @@ compile "bostonaholic:ring-okta:1.0.4"
   <groupId>bostonaholic</groupId>
   <artifactId>ring-okta</artifactId>
   <version>1.0.4</version>
-</dependency
+</dependency>
 ```
 
 ### Okta SAML Toolkit Dependency
