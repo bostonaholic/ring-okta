@@ -1,6 +1,6 @@
 # ring-okta
 
-![Build and Test](https://github.com/bostonaholic/ring-okta/workflows/Build%20and%20Test/badge.svg?branch=main) [![Clojars Project](https://img.shields.io/clojars/v/bostonaholic/ring-okta.svg)](https://clojars.org/bostonaholic/ring-okta)
+[![Build and Test](https://github.com/bostonaholic/ring-okta/actions/workflows/build-and-test.yml/badge.svg?branch=main)](https://github.com/bostonaholic/ring-okta/actions/workflows/build-and-test.yml) [![Clojars Project](https://img.shields.io/clojars/v/bostonaholic/ring-okta.svg)](https://clojars.org/bostonaholic/ring-okta)
 
 Ring middleware for Okta Single Sign-on.
 
