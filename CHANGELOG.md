@@ -3,7 +3,8 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/) and [semver.org](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- n/a
+### Changed
+- Upgrade clojure 1.10.3.
 
 ## [1.0.4] - 2021-07-30
 ### Changed
