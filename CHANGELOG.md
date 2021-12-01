@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file. This change
 ## [Unreleased]
 ### Changed
 - Upgrade clojure 1.10.3.
+- Upgrade lein-codox 0.10.8.
 
 ## [1.0.4] - 2021-07-30
 ### Changed
