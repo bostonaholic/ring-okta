@@ -35,8 +35,7 @@
           :output-path "./docs"
           :source-uri "https://github.com/bostonaholic/ring-okta/blob/v{version}/{filepath}#L{line}"}
 
-  :profiles {:dev {:resource-paths ["test-resources"]
-                   :dependencies [[cloverage "1.2.2"]]}
+  :profiles {:dev {:resource-paths ["test-resources"]}
              :1.8 {:resource-paths ["test-resources"]
                    :dependencies [[org.clojure/clojure "1.8.0"]]}
              :1.9 {:resource-paths ["test-resources"]
