@@ -41,7 +41,7 @@
              :1.9 {:resource-paths ["test-resources"]
                    :dependencies [[org.clojure/clojure "1.9.0"]]}
              :1.10 {:resource-paths ["test-resources"]
-                   :dependencies [[org.clojure/clojure "1.10.3"]]}}
+                    :dependencies [[org.clojure/clojure "1.10.3"]]}}
 
   :aliases {"test-all-profiles" ["with-profile" "dev:1.8:1.9:1.10" "test"]
             "cloverage" ["do" "cloverage" "--output" "docs/coverage"]
