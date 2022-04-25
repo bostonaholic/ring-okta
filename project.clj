@@ -29,7 +29,7 @@
 
   :plugins [[lein-ancient "0.7.0"]
             [lein-codox "0.10.8"]
-            [lein-cloverage "1.2.2"]]
+            [lein-cloverage "1.2.3"]]
 
   :codox {:namespaces [ring.middleware.okta]
           :output-path "./docs"

@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file. This change
 - Upgrade lein-codox 0.10.8.
 - Remove unnecessary dependency on cloverage in dev profile.
 - Upgrade ring-core 1.9.5.
+- Upgrade lein-cloverage 1.2.3.
 
 ## [1.0.4] - 2021-07-30
 ### Changed
