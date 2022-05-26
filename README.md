@@ -9,19 +9,19 @@ Ring middleware for Okta Single Sign-on.
 ### Leiningen/Boot
 
 ```
-[bostonaholic/ring-okta "1.0.4"]
+[bostonaholic/ring-okta "1.0.5"]
 ```
 
 ### Clojure CLI/deps.edn
 
 ```
-bostonaholic/ring-okta {:mvn/version "1.0.4"}
+bostonaholic/ring-okta {:mvn/version "1.0.5"}
 ```
 
 ### Gradle
 
 ```
-implementation("bostonaholic:ring-okta:1.0.4")
+implementation("bostonaholic:ring-okta:1.0.5")
 ```
 
 ### Maven
@@ -30,7 +30,7 @@ implementation("bostonaholic:ring-okta:1.0.4")
 <dependency>
   <groupId>bostonaholic</groupId>
   <artifactId>ring-okta</artifactId>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
 </dependency>
 ```
 
@@ -105,6 +105,6 @@ The process for releasing a new version is as follows:
 
 ## License
 
-Copyright © 2021 Matthew Boston
+Copyright © 2022 Matthew Boston
 
 Released under the MIT License.
