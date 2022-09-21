@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This change
 ### Changed
 - Upgrade lein-cloverage 1.2.4.
 - Upgrade compojure 1.7.0.
+- Upgrade ring-core 1.9.6.
 
 ## [1.0.5] - 2022-05-26
 ### Changed
