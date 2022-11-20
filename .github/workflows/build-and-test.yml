@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2.5.0
+    - uses: actions/checkout@v3
 
     - name: Cache maven dependencies
-      uses: actions/cache@v3.0.11
+      uses: actions/cache@v3
       env:
         cache-name: cache-maven-deps
       with:
@@ -34,10 +34,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2.5.0
+    - uses: actions/checkout@v3
 
     - name: Cache maven dependencies
-      uses: actions/cache@v3.0.11
+      uses: actions/cache@v3
       env:
         cache-name: cache-maven-deps
       with:
@@ -58,7 +58,7 @@ jobs:
       run: lein cloverage
 
     - name: Upload coverage reports
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: coverage
         path: docs/coverage
