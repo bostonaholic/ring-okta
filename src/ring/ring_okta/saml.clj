@@ -3,10 +3,13 @@
             [clojure.string :as string])
   (:import (com.okta.saml SAMLValidator)))
 
-(defn- get-valid-user-id [saml-response okta-config validator]
+(defn- get-saml-response [saml-response okta-config validator]
   (let [config (.getConfiguration validator okta-config)
-        decoded-saml-response (String. (b64/decode (.getBytes saml-response "UTF-8")))
-        valid-saml-response (.getSAMLResponse validator decoded-saml-response config)]
+        decoded-saml-response (String. (b64/decode (.getBytes saml-response "UTF-8")))]
+    (.getSAMLResponse validator decoded-saml-response config)))
+
+(defn- get-valid-user-id [saml-response okta-config validator]
+  (let [valid-saml-response (get-saml-response saml-response okta-config validator)]
     (.getUserID valid-saml-response)))
 
 (defn respond-to-okta-post [okta-config params]
