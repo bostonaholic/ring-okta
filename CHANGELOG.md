@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/) and [semver.org](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.0.6] - 2023-06-15
 ### Changed
 - Upgrade lein-cloverage 1.2.4.
 - Upgrade compojure 1.7.0.
@@ -116,7 +118,8 @@ All notable changes to this project will be documented in this file. This change
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v1.0.5...HEAD
+[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v1.0.6...HEAD
+[1.0.6]: https://github.com/bostonaholic/ring-okta/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/bostonaholic/ring-okta/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/bostonaholic/ring-okta/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/bostonaholic/ring-okta/compare/v1.0.2...v1.0.3
