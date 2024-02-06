@@ -1,4 +1,4 @@
-(defproject bostonaholic/ring-okta "1.0.7"
+(defproject bostonaholic/ring-okta "1.0.8-SNAPSHOT"
   :description "Ring middleware for Okta Single Sign-on"
   :url "https://github.com/bostonaholic/ring-okta"
   :license {:name "The MIT License (MIT)"
