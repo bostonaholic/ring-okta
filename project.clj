@@ -6,7 +6,7 @@
   :repositories [["local" ~(str (.toURI (java.io.File. "maven_repository")))]]
   :dependencies [[org.clojure/clojure "1.11.1" :scope "provided"]
                  [org.clojure/core.incubator "0.1.4"]
-                 [ring/ring-core "1.9.6" :scope "provided" :exclusions [commons-codec]]
+                 [ring/ring-core "1.11.0" :scope "provided" :exclusions [commons-codec]]
                  [ring-mock "0.1.5" :scope "test"]
                  [compojure "1.7.0" :exclusions [org.clojure/clojure ring/ring-codec commons-codec joda-time]]
                  [org.clojure/data.codec "0.1.1"]
