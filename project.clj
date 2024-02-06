@@ -4,7 +4,7 @@
   :license {:name "The MIT License (MIT)"
             :url "https://mit-license.org"}
   :repositories [["local" ~(str (.toURI (java.io.File. "maven_repository")))]]
-  :dependencies [[org.clojure/clojure "1.10.3" :scope "provided"]
+  :dependencies [[org.clojure/clojure "1.11.1" :scope "provided"]
                  [org.clojure/core.incubator "0.1.4"]
                  [ring/ring-core "1.9.6" :scope "provided" :exclusions [commons-codec]]
                  [ring-mock "0.1.5" :scope "test"]
