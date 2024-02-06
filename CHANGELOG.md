@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/) and [semver.org](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.0.7] - 2024-02-06
 ### Changed
 - Update minimum clojure version to 1.9.0.
 - Upgrade clojure 1.11.1.
@@ -123,7 +125,8 @@ All notable changes to this project will be documented in this file. This change
 ### Added
 - Initial release.
 
-[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v1.0.6...HEAD
+[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v1.0.7...HEAD
+[1.0.7]: https://github.com/bostonaholic/ring-okta/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/bostonaholic/ring-okta/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/bostonaholic/ring-okta/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/bostonaholic/ring-okta/compare/v1.0.3...v1.0.4
