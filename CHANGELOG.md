@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 ### Changed
-- Upgrade clojure 1.11.1
+- Upgrade clojure 1.11.1.
 - Upgrade ring-core 1.11.0.
 - Upgrade compojure 1.7.1.
 
