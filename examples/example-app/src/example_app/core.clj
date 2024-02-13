@@ -19,5 +19,5 @@
   (jetty/run-jetty app {:port port
                         :join? false}))
 
-(defn -main [& args]
+(defn -main [& _]
   (start-server 3000))

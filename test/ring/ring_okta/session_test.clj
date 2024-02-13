@@ -3,7 +3,7 @@
             [ring.ring-okta.saml :as saml]
             [ring.ring-okta.session :as session]))
 
-(defn- stub-respond-to-okta-post [& args]
+(defn- stub-respond-to-okta-post [& _]
   {:redirect-url "http://foo.bar.com"
    :authenticated-user-email "foo@bar.com"})
 

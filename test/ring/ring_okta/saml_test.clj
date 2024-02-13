@@ -4,7 +4,7 @@
             [ring.ring-okta.saml :refer [respond-to-okta-post]]))
 
 (deftest test-respond-to-okta-post
-  (with-redefs [ring.ring-okta.saml/get-valid-user-id (fn [& args] "foo@bar.com")]
+  (with-redefs [ring.ring-okta.saml/get-valid-user-id (fn [& _] "foo@bar.com")]
     (let [params {:RelayState "http://foo.bar.com"}
           okta-config (slurp (io/resource "okta-config.xml"))
           response (respond-to-okta-post okta-config params)]
