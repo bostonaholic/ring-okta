@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/) and [semver.org](https://semver.org/spec/v2.0.0.html).
 
+- `Added` for new features.
+- `Changed` for changes in existing functionality.
+- `Deprecated` for soon-to-be removed features.
+- `Removed` for now removed features.
+- `Fixed` for any bug fixes.
+- `Security` in case of vulnerabilities.
+
 ## [Unreleased]
 ### Changed
 - Move ring-mock to dev dependency.
