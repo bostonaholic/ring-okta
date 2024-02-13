@@ -6,6 +6,7 @@
             [compojure.route :refer [not-found]]
             [ring.middleware.okta :refer [wrap-okta okta-routes]]
             [ring.mock.request :refer [request]]
+            [ring.ring-okta.session]
             [ring.util.response :refer [response]]))
 
 (def okta-home "https://company.okta.com")
