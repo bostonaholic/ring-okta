@@ -19,7 +19,7 @@
 
   (POST "/logout" request
         (okta-session/logout request)
-        (merge (ring-response/redirect-after-post (:redirect-after-logout request)))))
+        (merge (ring-response/redirect (:redirect-after-logout request) (ring-response/redirect-status-codes :see-other)))))
 
 (defn wrap-okta
   "Ring middleware for Okta Single Sign-on

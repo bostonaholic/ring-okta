@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file. This change
 ## [Unreleased]
 ### Changed
 - Move ring-mock to dev dependency.
+- Replace deprecated function `redirect-after-post`.
 
 ## [1.0.7] - 2024-02-06
 ### Changed

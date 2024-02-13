@@ -8,7 +8,7 @@
   (let [okta-config-contents (with-open [r (io/reader okta-config-location)] (slurp r))
         okta-response (saml/respond-to-okta-post okta-config-contents params)]
     (assoc-in
-     (response/redirect-after-post (:redirect-url okta-response))
+     (response/redirect (:redirect-url okta-response) (response/redirect-status-codes :see-other))
      [:session :okta/user]
      (:authenticated-user-email okta-response))))
 
