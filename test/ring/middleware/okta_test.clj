@@ -2,7 +2,7 @@
   (:require [clojure.java.io :as io]
             [clojure.test :refer [deftest testing is]]
             [clojure.test.helpers :refer [is-not]]
-            [compojure.core :refer [GET POST defroutes]]
+            [compojure.core :refer [GET defroutes]]
             [compojure.route :refer [not-found]]
             [ring.middleware.okta :refer [wrap-okta okta-routes]]
             [ring.mock.request :refer [request]]
