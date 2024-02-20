@@ -108,7 +108,7 @@
 
 (deftest test-okta-routes
   (testing "with okta-routes"
-    (let [default-handler (defroutes test-routes
+    (let [default-handler (defroutes ^:private _
                             (GET "/foo" [& _] identity)
                             okta-routes
                             (not-found "Not Found"))]
@@ -134,7 +134,7 @@
               (is (= "/foo" (-> response :headers (get "Location"))))))))))
 
   (testing "without okta-routes"
-    (let [default-handler (defroutes test-routes
+    (let [default-handler (defroutes ^:private _
                             (GET "/foo" [& _] identity)
                             (not-found "Not Found"))
           handler (wrap-okta default-handler okta-home)]
