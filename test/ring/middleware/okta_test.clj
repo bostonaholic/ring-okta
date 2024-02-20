@@ -109,7 +109,7 @@
 (deftest test-okta-routes
   (testing "with okta-routes"
     (let [default-handler (defroutes test-routes
-                            (GET "/foo" identity)
+                            (GET "/foo" [& _] identity)
                             okta-routes
                             (not-found "Not Found"))]
       (testing "login"
@@ -135,7 +135,7 @@
 
   (testing "without okta-routes"
     (let [default-handler (defroutes test-routes
-                            (GET "/foo" identity)
+                            (GET "/foo" [& _] identity)
                             (not-found "Not Found"))
           handler (wrap-okta default-handler okta-home)]
       (testing "login"
