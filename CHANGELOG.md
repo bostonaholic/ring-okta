@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file. This change
 - Move ring-mock to dev dependency.
 - Replace deprecated function `redirect-after-post`.
 - Upgrade ring-core 1.12.1.
+- Upgrade org.clojure/data.codec 0.2.0.
 
 ## [1.0.7] - 2024-02-06
 ### Changed

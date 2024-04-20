@@ -8,7 +8,7 @@
                  [org.clojure/core.incubator "0.1.4"]
                  [ring/ring-core "1.12.1" :scope "provided" :exclusions [commons-codec]]
                  [compojure "1.7.1" :exclusions [org.clojure/clojure ring/ring-codec commons-codec joda-time]]
-                 [org.clojure/data.codec "0.1.1"]
+                 [org.clojure/data.codec "0.2.0"]
                  [com.okta/saml-toolkit "1.0.12-000170-c7ed721" :upgrade :okta]
 
                  ;; okta dependencies -- some are not specified in their pom,
