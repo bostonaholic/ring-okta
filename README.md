@@ -8,25 +8,25 @@ Ring middleware for Okta Single Sign-on.
 
 ### Leiningen/Boot
 
-```
+```clojure
 [bostonaholic/ring-okta "1.0.7"]
 ```
 
 ### Clojure CLI/deps.edn
 
-```
+```clojure
 bostonaholic/ring-okta {:mvn/version "1.0.7"}
 ```
 
 ### Gradle
 
-```
+```gradle
 implementation("bostonaholic:ring-okta:1.0.7")
 ```
 
 ### Maven
 
-```
+```xml
 <dependency>
   <groupId>bostonaholic</groupId>
   <artifactId>ring-okta</artifactId>
@@ -40,7 +40,7 @@ Since Okta doesn't publish the SAML Toolkit for Java, you must download it [here
 
 ## Usage
 
-```
+```clojure
 (ns com.company.core
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
