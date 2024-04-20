@@ -89,7 +89,7 @@ The process for releasing a new version is as follows:
 1. Bump version in project.clj following [Semantic Versioning 2.0.0](https://semver.org/)
 2. Bump version in [README.md](./README.md) to match `project.clj`
 3. Add changes to [CHANGELOG.md](./CHANGELOG.md) following [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
-3. Generate API docs with `lein codox`
+4. Generate API docs with `lein codox`
 
 #### Release
 
