@@ -41,6 +41,6 @@
              :1.11 {:resource-paths ["test-resources"]
                     :dependencies [[org.clojure/clojure "1.11.3"]]}}
 
-  :aliases {"test-all-profiles" ["with-profile" "default:dev,1.10:dev,1.11" "test"]
+  :aliases {"test-all-profiles" ["with-profile" "default:dev,1.10:dev,1.11:dev" "test"]
             "cloverage" ["do" "cloverage" "--output" "docs/coverage"]
             "release" ["do" "clean," "deploy" "clojars"]})
