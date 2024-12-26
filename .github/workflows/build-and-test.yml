@@ -26,7 +26,7 @@ jobs:
           ${{ runner.os }}-
 
     - name: Install dependencies
-      run: lein deps
+      run: script/bootstrap
 
   test:
     needs: build
@@ -48,11 +48,8 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
 
-    - name: Install dependencies
-      run: lein deps
-
     - name: Run tests
-      run: lein test-all-profiles
+      run: script/cibuild
 
     - name: Run code coverage
       run: lein cloverage
