@@ -1,0 +1,13 @@
+#! /bin/bash
+
+# script/bootstrap: Resolve all dependencies that the application requires to
+#                   run.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+if [ -f "project.clj" ]; then
+  echo "Installing Clojure dependencies..."
+  lein deps
+fi
