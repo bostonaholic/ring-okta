@@ -14,5 +14,4 @@ export LEIN_ENV="test"
 echo "Running tests..."
 date "+%H:%M:%S"
 
-# run tests.
 script/test
