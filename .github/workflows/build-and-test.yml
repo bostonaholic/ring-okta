@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -59,4 +58,3 @@ jobs:
       with:
         name: coverage
         path: docs/coverage
-
