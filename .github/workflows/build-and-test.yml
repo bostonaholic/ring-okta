@@ -12,6 +12,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install Leiningen
+      uses: DeLaGuardo/setup-clojure@12.1
+      with:
+        lein: latest
+
     - name: Use cache for maven dependencies
       uses: actions/cache@v4
       env:
