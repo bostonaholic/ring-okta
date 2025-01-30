@@ -24,6 +24,10 @@ All notable changes to this project will be documented in this file. This change
 - Upgrade ring-core 1.13.0.
 - Upgrade org.clojure/data.codec 0.2.0.
 
+### Added
+
+- Added support for clojure 1.12.0.
+
 ## [1.0.7] - 2024-02-06
 
 ### Changed
