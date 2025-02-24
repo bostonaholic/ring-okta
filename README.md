@@ -105,6 +105,6 @@ The process for releasing a new version is as follows:
 
 ## License
 
-Copyright © 2024 Matthew Boston
+Copyright © 2025 Matthew Boston
 
 Released under the MIT License.
