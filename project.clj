@@ -43,7 +43,7 @@
              :1.12 {:resource-paths ["test-resources"]
                     :dependencies [[org.clojure/clojure "1.12.0"]]}}
 
-  :aliases {"deps-all-profiles" ["with-profile" "dev:dev,1.10:dev,1.11:dev,1.12" "deps"]
-            "test-all-profiles" ["with-profile" "dev:dev,1.10:dev,1.11:dev,1.12" "test"]
+  :aliases {"deps-all" ["with-profile" "dev:dev,1.10:dev,1.11:dev,1.12" "deps"]
+            "test-all" ["with-profile" "dev:dev,1.10:dev,1.11:dev,1.12" "test"]
             "cloverage" ["do" "cloverage" "--output" "docs/coverage"]
             "release" ["do" "clean," "deploy" "clojars"]})

@@ -9,5 +9,5 @@ cd "$(dirname "$0")/.."
 
 if [ -f "project.clj" ]; then
   echo "Installing Clojure dependencies..."
-  lein deps-all-profiles
+  lein deps-all
 fi

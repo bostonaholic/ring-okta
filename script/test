@@ -30,7 +30,7 @@ echo "==> Running tests..."
 
 if [ -n "$1" ]; then
   # pass arguments to test call. This is useful for calling a single test.
-  lein test-all-profiles "$1"
+  lein test-all "$1"
 else
-  lein test-all-profiles
+  lein test-all
 fi
