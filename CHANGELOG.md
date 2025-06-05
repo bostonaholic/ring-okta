@@ -26,7 +26,7 @@ All notable changes to this project will be documented in this file. This change
 
 ### Added
 
-- Added support for clojure 1.12.0.
+- Added support for clojure 1.12.1.
 
 ## [1.0.7] - 2024-02-06
 
