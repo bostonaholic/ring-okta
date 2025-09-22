@@ -41,7 +41,7 @@
              :1.11 {:resource-paths ["test-resources"]
                     :dependencies [[org.clojure/clojure "1.11.3"]]}
              :1.12 {:resource-paths ["test-resources"]
-                    :dependencies [[org.clojure/clojure "1.12.1"]]}}
+                    :dependencies [[org.clojure/clojure "1.12.2"]]}}
 
   :aliases {"deps-all" ["with-profile" "dev:dev,1.10:dev,1.11:dev,1.12" "deps"]
             "test-all" ["with-profile" "dev:dev,1.10:dev,1.11:dev,1.12" "test"]
