@@ -213,9 +213,15 @@ public class GenerateSamlFixtures {
     return (KeyStore.PrivateKeyEntry) store.getEntry(alias, new KeyStore.PasswordProtection(KEYSTORE_PASSWORD.toCharArray()));
   }
 
+  // default, loginUri, suppressErrors, and allowedAddresses are 1.x toolkit
+  // keys that ring-okta ignores. They are here so the tests prove that a 1.x
+  // config with <sp> added validates.
   static String oktaConfig(String certificate) {
     return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
         + "<configuration>\n"
+        + "  <default>" + IDP_ENTITY_ID + "</default>\n"
+        + "  <loginUri>" + SSO_URL + "</loginUri>\n"
+        + "  <suppressErrors>false</suppressErrors>\n"
         + "  <applications>\n"
         + "    <application>\n"
         + "      <md:EntityDescriptor xmlns:md=\"urn:oasis:names:tc:SAML:2.0:metadata\" entityID=\"" + IDP_ENTITY_ID + "\">\n"
@@ -231,6 +237,11 @@ public class GenerateSamlFixtures {
         + "      <sp entityID=\"" + SP_ENTITY_ID + "\" assertionConsumerServiceURL=\"" + ACS_URL + "\"/>\n"
         + "    </application>\n"
         + "  </applications>\n"
+        + "  <allowedAddresses>\n"
+        + "    <oktaUsers/>\n"
+        + "    <spUsers/>\n"
+        + "    <spGroups/>\n"
+        + "  </allowedAddresses>\n"
         + "</configuration>\n";
   }
 

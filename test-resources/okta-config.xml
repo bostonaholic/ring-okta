@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+  <default>http://www.okta.com/exk-test</default>
+  <loginUri>https://example.okta.com/app/example_app/exk-test/sso/saml</loginUri>
+  <suppressErrors>false</suppressErrors>
   <applications>
     <application>
       <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://www.okta.com/exk-test">
         <md:IDPSSODescriptor WantAuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
           <md:KeyDescriptor use="signing">
-            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>MIIC3zCCAcegAwIBAgIIXYTTDWCUePEwDQYJKoZIhvcNAQEMBQAwHTEbMBkGA1UEAxMScmluZy1va3RhIHRlc3QgaWRwMCAXDTI2MDkyOTIxMTIxOVoYDzIxMzYwNDA1MjExMjE5WjAdMRswGQYDVQQDExJyaW5nLW9rdGEgdGVzdCBpZHAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDgat13ZNbv/BRg7cjz6BtKnldGglg4sQmY6VpWTaFiTutEeM4sHZl+xgKuf0HB/LaZIWvPe7ROdnO8e3vTRZUR5iMp9GAz58eY5RpScCYPhA5YeqXFeoACcjerc8A2giIaD8r0Fn+5bA0DPqbVO+gbjKUDNUNtMyLKrvFQGYrSZnFsJHkpEWGkWZVh11b2Kv4Ifp7BHIaJTykiIrygocCSP3LWi2oitPz8ANdGZQ06/8XILLJJprn8kU8/OdcNeUBkrghIFxF/dyP8qzYlUYH1ZXVe91C9WQHiNU6Z96gs+PfN6BxZNbjtAUWw4Q+FTfapxWhJsWHYrapR6+v9j+oXAgMBAAGjITAfMB0GA1UdDgQWBBQcw92Ll/yDhbe8Q73RIjC4xXKR/jANBgkqhkiG9w0BAQwFAAOCAQEA0WPkeEsmF9M4bXpkaCKQqUEqZTrpPclD81oYLssnu05gnJVKgQp1s3RTOyMYv/dReMAkzro92iIofdLos5MwHsS2+g9b9543k8uPgbgwXXW3HA5HabKVSHc834Tt/m18VjAi59YgQjT2f4+uHkOTDvFJ1u5+IFU0yO71StFUaRk3mh0covPKFJ7q8Q3rXrPIOR+4a0b7tKsq1XlwlIoVcEhW5JRlVmL/a+4z9DoNo0+/FvbSjzOwYquImIR7wpzsaeUY7wSnKXYe7tCI9UYI5QSxs7lJAiGdCB4NwmTVyvf8BZxYCKZ2bltlhWGdlWT/B13or2jdStvTWqBgv0tK9w==</ds:X509Certificate></ds:X509Data></ds:KeyInfo>
+            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>MIIC4DCCAcigAwIBAgIJAIbnTETnnsXgMA0GCSqGSIb3DQEBDAUAMB0xGzAZBgNVBAMTEnJpbmctb2t0YSB0ZXN0IGlkcDAgFw0yNjA5MjkyMTE0MjhaGA8yMTM2MDQwNTIxMTQyOFowHTEbMBkGA1UEAxMScmluZy1va3RhIHRlc3QgaWRwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxunNd1oz4yciu3h2zEPIKzthffXXPuHgc7Cjpowc63LfAqzfwAhSpSinbMsZAWi2dGciw3t5z6y2GV4vo5shVHbiqVcaZ262jPVWaAk5jPB/1SuipsPzaQIIK8YCNWaFpPQL8bRj3URgzl0rz4OaRRMU0lQxtkLrq0deFWKo38DO89iJE0ou7vhmktZtzENKUZ+aIEHt64b0AXlhckHt9cuHVHbk59GlMlBuyB32UntptUXVnovyWRCr4TSdEuE4LYasQSryNtJHuj1rB/POuiusUoltnpzs1e7Yb3IQ5PYO5PF6nsrTc1wF924ZQM/4abBP4fpgYIn9C8m2PlCKrwIDAQABoyEwHzAdBgNVHQ4EFgQUWnGqXz53uEWSmayBNdDfgthazUwwDQYJKoZIhvcNAQEMBQADggEBAL6DYlbz/WUl0WQtmlxcLjNd85GTaC/MpGt23E0Vkz5NfOJYnRBHpfC5V6w4LTQjPvJpkZ92PcyuO9EBtManLpr7J05jxn+hfE965fgEEdCN3icrPCjBmTvRV3H7OFaR3izjCP9QIJQyabMkeji6vIHn+uZVCiWVV+DEpHkCzIQL7Rti5/pAF8af/y4SCBqfsROeAvlN8kO9m/oWDXjBSLCp5YvPHwo6MzSs+1eYPBR/V/ZjTr6/dv3KCv7eNxNfSkeedudtrFfiK9a2ZZRnwQB5vGXnA71xBrNC1sAJwvapFbHTaBtQoKdo/Ao+c1NoblEN7NkNgi8Vc/4D8CiXzf8=</ds:X509Certificate></ds:X509Data></ds:KeyInfo>
           </md:KeyDescriptor>
           <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
           <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://example.okta.com/app/example_app/exk-test/sso/saml"/>
@@ -15,4 +18,9 @@
       <sp entityID="http://localhost:3000/" assertionConsumerServiceURL="http://localhost:3000/login"/>
     </application>
   </applications>
+  <allowedAddresses>
+    <oktaUsers/>
+    <spUsers/>
+    <spGroups/>
+  </allowedAddresses>
 </configuration>

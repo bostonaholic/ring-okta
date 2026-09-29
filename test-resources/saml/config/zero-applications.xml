@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Test input: a valid okta-config.xml except that it has zero <application> elements. -->
+<configuration>
+  <applications>
+  </applications>
+</configuration>

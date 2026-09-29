@@ -6,7 +6,7 @@
            (javax.xml.namespace NamespaceContext)
            (javax.xml.parsers DocumentBuilderFactory)
            (javax.xml.xpath XPath XPathConstants XPathFactory)
-           (org.w3c.dom Document Node)
+           (org.w3c.dom Document Node NodeList)
            (org.xml.sax InputSource)))
 
 ;; Clojure 1.9 reflection on JDK 17+ resolves interop calls to non-exported
@@ -14,13 +14,17 @@
 (set! *warn-on-reflection* true)
 
 (def ^:private application-path "/configuration/applications/application")
-(def ^:private idp-entity-id-path "md:EntityDescriptor/@entityID")
 (def ^:private idp-certificate-path
   "md:EntityDescriptor/md:IDPSSODescriptor/md:KeyDescriptor[not(@use) or @use='signing']//ds:X509Certificate")
-(def ^:private idp-sso-url-path
-  "md:EntityDescriptor/md:IDPSSODescriptor/md:SingleSignOnService[@Binding='urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST']/@Location")
-(def ^:private sp-entity-id-path "sp/@entityID")
-(def ^:private sp-acs-url-path "sp/@assertionConsumerServiceURL")
+
+(def ^:private config-paths
+  "Each config value and its path relative to application-path, in the
+  order a missing-value error names them."
+  [[:idp-entity-id "md:EntityDescriptor/@entityID"]
+   [:idp-certificate idp-certificate-path]
+   [:idp-sso-url "md:EntityDescriptor/md:IDPSSODescriptor/md:SingleSignOnService[@Binding='urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST']/@Location"]
+   [:sp-entity-id "sp/@entityID"]
+   [:sp-acs-url "sp/@assertionConsumerServiceURL"]])
 
 (def ^:private namespace-uris
   {"md" "urn:oasis:names:tc:SAML:2.0:metadata"
@@ -42,18 +46,42 @@
   (doto (.newXPath (XPathFactory/newInstance))
     (.setNamespaceContext namespace-context)))
 
+(defn- invalid-okta-config
+  ([message] (ex-info message {:type ::invalid-okta-config}))
+  ([message cause] (ex-info message {:type ::invalid-okta-config} cause)))
+
+(defn- parse-config-xml ^Document [okta-config]
+  (try
+    (parse-xml okta-config)
+    (catch Exception e
+      (throw (invalid-okta-config (str "Okta config is not valid XML: " (.getMessage e)) e)))))
+
+(defn- the-only-node
+  "The one node that path selects from context. Throws invalid-okta-config
+  with the count when path selects zero or several nodes."
+  ^Node [^XPath xpath ^String path context description]
+  (let [^NodeList nodes (.evaluate xpath path context XPathConstants/NODESET)
+        node-count (.getLength nodes)]
+    (when-not (= 1 node-count)
+      (throw (invalid-okta-config
+              (format "Okta config must have exactly 1 %s at %s, found %d" description path node-count))))
+    (.item nodes 0)))
+
 (defn- parse-okta-config [okta-config]
   (let [^XPath xpath (new-xpath)
-        ^Node application (.evaluate xpath ^String application-path (parse-xml okta-config) XPathConstants/NODE)
-        value (fn [^String path]
-                (string/trim (.evaluate xpath path application)))]
-    {:idp-entity-id (value idp-entity-id-path)
-     :idp-certificate (value idp-certificate-path)
-     :idp-sso-url (value idp-sso-url-path)
-     :sp-entity-id (value sp-entity-id-path)
-     :sp-acs-url (value sp-acs-url-path)}))
+        ^Node application (the-only-node xpath application-path (parse-config-xml okta-config) "application")
+        _ (the-only-node xpath idp-certificate-path application "signing certificate")
+        config (into {} (for [[k ^String path] config-paths]
+                          [k (string/trim (.evaluate xpath path application))]))
+        missing-paths (for [[k path] config-paths
+                            :when (string/blank? (get config k))]
+                        path)]
+    (when (seq missing-paths)
+      (throw (invalid-okta-config
+              (str "Okta config is missing " (string/join ", " missing-paths) " under " application-path))))
+    config))
 
-(defn- saml-settings ^Saml2Settings [{:keys [idp-entity-id idp-certificate idp-sso-url sp-entity-id sp-acs-url]}]
+(defn- build-settings ^Saml2Settings [{:keys [idp-entity-id idp-certificate idp-sso-url sp-entity-id sp-acs-url]}]
   (-> (SettingsBuilder.)
       (.fromValues {"onelogin.saml2.strict" true
                     "onelogin.saml2.security.want_assertions_signed" false
@@ -65,6 +93,16 @@
                     "onelogin.saml2.sp.entityid" sp-entity-id
                     "onelogin.saml2.sp.assertion_consumer_service.url" sp-acs-url})
       (.build)))
+
+(defn- saml-settings
+  "java-saml settings for config. SettingsBuilder drops a value it cannot
+  parse, such as a malformed URL or certificate, so checkSettings reports it."
+  ^Saml2Settings [config]
+  (let [^Saml2Settings settings (build-settings config)
+        errors (.checkSettings settings)]
+    (when (seq errors)
+      (throw (invalid-okta-config (str "Okta config has invalid SAML settings: " (string/join ", " errors)))))
+    settings))
 
 (defn- invalid-saml-response
   ([message] (ex-info message {:type ::invalid-saml-response}))

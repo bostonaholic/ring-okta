@@ -164,4 +164,63 @@
 
     (testing "rejects RSA-SHA1 signatures"
       (is (= {:type ::saml/invalid-saml-response :code ValidationError/INVALID_SIGNATURE}
-             (rejection-code okta-config (fixture "V4")))))))
+             (rejection-code okta-config (fixture "V4")))))
+
+    ;; Slice 5
+    (testing "accepts a 1.x config with <sp> added"
+      (is (config-has? okta-config "/configuration/default"))
+      (is (config-has? okta-config "/configuration/loginUri"))
+      (is (config-has? okta-config "/configuration/suppressErrors"))
+      (is (config-has? okta-config "/configuration/allowedAddresses"))
+      (is (config-has? okta-config "/configuration/allowedAddresses/oktaUsers"))
+      (is (config-has? okta-config "/configuration/allowedAddresses/spUsers"))
+      (is (config-has? okta-config "/configuration/allowedAddresses/spGroups"))
+      (is (= "jane.doe@example.com"
+             (:authenticated-user-email
+              (respond-to-okta-post okta-config {:SAMLResponse (fixture "V1") :RelayState "/dashboard"})))))
+
+    (testing "rejects an invalid Okta config and names the fix"
+      (let [params {:SAMLResponse (fixture "V1") :RelayState "/dashboard"}]
+        (testing "0-byte config"
+          (is (= ::saml/invalid-okta-config
+                 (:type (rejection (slurp (io/resource "custom-okta-config.xml")) params)))))
+        (testing "missing <sp>"
+          (let [rejected (rejection (config "missing-sp") params)]
+            (is (= ::saml/invalid-okta-config (:type rejected)))
+            (is (re-find #"sp/@entityID" (str (:message rejected))))))
+        (testing "missing sp/@assertionConsumerServiceURL"
+          (let [rejected (rejection (config "missing-acs-url") params)]
+            (is (= ::saml/invalid-okta-config (:type rejected)))
+            (is (re-find #"sp/@assertionConsumerServiceURL" (str (:message rejected))))))
+        (testing "missing md:EntityDescriptor/@entityID"
+          (let [rejected (rejection (config "missing-idp-entity-id") params)]
+            (is (= ::saml/invalid-okta-config (:type rejected)))
+            (is (re-find #"md:EntityDescriptor/@entityID" (str (:message rejected))))))
+        (testing "missing HTTP-POST SingleSignOnService @Location"
+          (let [rejected (rejection (config "missing-sso-location") params)]
+            (is (= ::saml/invalid-okta-config (:type rejected)))
+            (is (re-find #"md:EntityDescriptor/md:IDPSSODescriptor/md:SingleSignOnService\[@Binding='urn:oasis:names:tc:SAML:2\.0:bindings:HTTP-POST'\]/@Location"
+                         (str (:message rejected))))))
+        (testing "zero <application> elements"
+          (let [rejected (rejection (config "zero-applications") params)]
+            (is (= ::saml/invalid-okta-config (:type rejected)))
+            (is (re-find #"\b0\b" (str (:message rejected))))))
+        (testing "two <application> elements"
+          (let [rejected (rejection (config "two-applications") params)]
+            (is (= ::saml/invalid-okta-config (:type rejected)))
+            (is (re-find #"\b2\b" (str (:message rejected))))))
+        (testing "zero signing certificates"
+          (let [rejected (rejection (config "zero-certificates") params)]
+            (is (= ::saml/invalid-okta-config (:type rejected)))
+            (is (re-find #"\b0\b" (str (:message rejected))))))
+        (testing "two signing certificates"
+          (let [rejected (rejection (config "two-certificates") params)]
+            (is (= ::saml/invalid-okta-config (:type rejected)))
+            (is (re-find #"\b2\b" (str (:message rejected))))))
+        (testing "DOCTYPE in the config"
+          (is (= ::saml/invalid-okta-config
+                 (:type (rejection (config "doctype") params)))))
+        (testing "malformed ACS URL"
+          (let [rejected (rejection (config "malformed-acs-url") params)]
+            (is (= ::saml/invalid-okta-config (:type rejected)))
+            (is (re-find #"sp_acs_not_found" (str (:message rejected))))))))))

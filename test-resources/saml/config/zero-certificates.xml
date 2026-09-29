@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Test input: a valid okta-config.xml except that it has zero signing certificates. -->
+<configuration>
+  <applications>
+    <application>
+      <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://www.okta.com/exk-test">
+        <md:IDPSSODescriptor WantAuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+          <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+          <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://example.okta.com/app/example_app/exk-test/sso/saml"/>
+          <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://example.okta.com/app/example_app/exk-test/sso/saml"/>
+        </md:IDPSSODescriptor>
+      </md:EntityDescriptor>
+      <sp entityID="http://localhost:3000/" assertionConsumerServiceURL="http://localhost:3000/login"/>
+    </application>
+  </applications>
+</configuration>

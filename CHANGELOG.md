@@ -26,6 +26,7 @@ If you stay on `1.x` with JDK 16 or later, every login throws `IllegalAccessErro
 - Replace the Okta SAML Toolkit `1.0.12-000170-c7ed721` with java-saml-core `2.9.0` from Maven Central. You do not need a manual install.
 - Each Okta configuration file needs an `sp` element with `entityID` and `assertionConsumerServiceURL`.
 - A SAML response that fails validation throws `ExceptionInfo` with `:type` `:ring.ring-okta.saml/invalid-saml-response`, not an OpenSAML or toolkit exception. The java-saml exception is the cause.
+- A configuration file that is not valid throws `ExceptionInfo` with `:type` `:ring.ring-okta.saml/invalid-okta-config` at the first login. The message names the path, count, or java-saml settings code to fix.
 - Reject a SAML response signed with RSA-SHA1. Set the Okta app to RSA-SHA256 before you upgrade.
 - Responses with both the response and the assertion signed, or with only the response signed, keep the `1.x` result.
 - Bump the major version to `2.0.0`.

@@ -100,9 +100,19 @@ The tests cover these Okta signing settings:
 | Both signed | RSA-SHA256 | SHA1 | Accepted |
 | Both signed | RSA-SHA1 | SHA1 | Rejected. Set the Okta app to RSA-SHA256. |
 
-When a login fails, `ring-okta` throws an `ExceptionInfo`. `(:type (ex-data e))` is `:ring.ring-okta.saml/invalid-saml-response` for a response that fails validation. Your app decides the HTTP status.
+When a login fails, `ring-okta` throws an `ExceptionInfo`. Your app decides the HTTP status. `(:type (ex-data e))` is one of these:
+
+- `:ring.ring-okta.saml/invalid-saml-response`: the SAML response fails validation.
+- `:ring.ring-okta.saml/invalid-okta-config`: the configuration file is not valid. The message names the path, count, or java-saml settings code to fix.
 
 The tests use signed responses in the format that Okta documents. They do not come from a live Okta tenant. If a real Okta response fails to validate, [open an issue](https://github.com/bostonaholic/ring-okta/issues).
+
+### Upgrading from 1.x
+
+1. Add the `sp` element to each Okta configuration file. Copy its values from the Okta app fields "Audience URI (SP Entity ID)" and "Single sign-on URL".
+2. If your Okta app signs with RSA-SHA1, set it to RSA-SHA256.
+3. You can keep the `1.x` toolkit elements, such as `default`, `loginUri`, `suppressErrors`, and `allowedAddresses`. `ring-okta` ignores them.
+4. Log in once. If the configuration is not valid, the `invalid-okta-config` message names the path to fix.
 
 ## Documentation
 
