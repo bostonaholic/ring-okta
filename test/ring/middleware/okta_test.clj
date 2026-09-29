@@ -131,6 +131,15 @@
           (is (= "/dashboard" (-> response :headers (get "Location"))))
           (is (= "jane.doe@example.com" (-> response :session :okta/user)))))
 
+      ;; Slice 3
+      (testing "login with a response for another app, no stub"
+        (let [handler (wrap-okta default-handler okta-home)
+              thrown (is (thrown? ExceptionInfo
+                                  (handler (assoc (request :post "/login")
+                                                  :params {:SAMLResponse (string/trim (slurp (io/resource "saml/N4.b64")))
+                                                           :RelayState "/dashboard"}))))]
+          (is (= :ring.ring-okta.saml/invalid-saml-response (:type (ex-data thrown))))))
+
       (testing "logout"
         (with-redefs [ring.ring-okta.session/logout identity]
           (testing "with default redirect"

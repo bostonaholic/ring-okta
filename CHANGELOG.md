@@ -39,6 +39,7 @@ If you stay on `1.x` with JDK 16 or later, every login throws `IllegalAccessErro
 
 ### Security
 
+- Reject a SAML response for another service provider: a wrong Audience, a wrong Destination, a wrong `SubjectConfirmationData` Recipient, or no Audience at all. `1.1.0` accepted a wrong Audience and a wrong Destination.
 - Pin `org.apache.santuario/xmlsec` `2.3.5` (CVE-2023-44483) and `org.apache.commons/commons-lang3` `3.18.0` (CVE-2025-48924) over the versions that java-saml-core brings in.
 - Remove `opensaml` `2.6.4` (CVE-2015-1796, no support since 2016), `bcprov-jdk16` `1.45`, and `commons-lang3` `3.0`, which have known advisories.
 

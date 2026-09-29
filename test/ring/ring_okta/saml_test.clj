@@ -117,4 +117,32 @@
                 :code nil
                 :message "SAMLResponse parameter is missing or empty"
                 :cause nil}
-               (rejection okta-config {:SAMLResponse "" :RelayState "/dashboard"})))))))
+               (rejection okta-config {:SAMLResponse "" :RelayState "/dashboard"})))))
+
+    ;; Slice 3
+    (testing "rejects responses for another service provider"
+      (testing "wrong Audience"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/WRONG_AUDIENCE}
+               (rejection-code okta-config (fixture "N4")))))
+      (testing "wrong Destination"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/WRONG_DESTINATION}
+               (rejection-code okta-config (fixture "N5")))))
+      (testing "wrong SubjectConfirmationData Recipient"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/WRONG_SUBJECTCONFIRMATION}
+               (rejection-code okta-config (fixture "N5b")))))
+      (testing "no Audience"
+        (let [rejected (rejection okta-config {:SAMLResponse (fixture "N4b") :RelayState "/dashboard"})]
+          (is (= {:type ::saml/invalid-saml-response :cause nil}
+                 (select-keys rejected [:type :cause])))
+          (is (re-find #"Audience" (str (:message rejected)))))))
+
+    (testing "rejects responses outside their time window"
+      (testing "expired"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/ASSERTION_EXPIRED}
+               (rejection-code okta-config (fixture "N3")))))
+      (testing "not yet valid"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/ASSERTION_TOO_EARLY}
+               (rejection-code okta-config (fixture "N3b")))))
+      (testing "SubjectConfirmationData expired"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/WRONG_SUBJECTCONFIRMATION}
+               (rejection-code okta-config (fixture "N3c"))))))))

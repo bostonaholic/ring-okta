@@ -72,8 +72,10 @@ public class GenerateSamlFixtures {
     String status = SUCCESS;
     /** Null leaves the Subject with no NameID. */
     String nameId = NAME_ID;
+    /** Null leaves Conditions with no AudienceRestriction. */
     String audience = SP_ENTITY_ID;
     String destination = ACS_URL;
+    String recipient = ACS_URL;
     Instant notBefore;
     Instant notOnOrAfter = FAR_FUTURE;
     Instant scdNotOnOrAfter = FAR_FUTURE;
@@ -92,6 +94,7 @@ public class GenerateSamlFixtures {
       nameId = other.nameId;
       audience = other.audience;
       destination = other.destination;
+      recipient = other.recipient;
       notBefore = other.notBefore;
       notOnOrAfter = other.notOnOrAfter;
       scdNotOnOrAfter = other.scdNotOnOrAfter;
@@ -129,10 +132,11 @@ public class GenerateSamlFixtures {
         + "<saml2:Subject>"
         + (o.nameId == null ? "" : "<saml2:NameID Format=\"urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified\">" + o.nameId + "</saml2:NameID>")
         + "<saml2:SubjectConfirmation Method=\"urn:oasis:names:tc:SAML:2.0:cm:bearer\">"
-        + "<saml2:SubjectConfirmationData NotOnOrAfter=\"" + SAML_TIME.format(o.scdNotOnOrAfter) + "\" Recipient=\"" + ACS_URL + "\"/>"
+        + "<saml2:SubjectConfirmationData NotOnOrAfter=\"" + SAML_TIME.format(o.scdNotOnOrAfter) + "\" Recipient=\"" + o.recipient + "\"/>"
         + "</saml2:SubjectConfirmation></saml2:Subject>"
         + "<saml2:Conditions NotBefore=\"" + SAML_TIME.format(o.notBefore) + "\" NotOnOrAfter=\"" + SAML_TIME.format(o.notOnOrAfter) + "\">"
-        + "<saml2:AudienceRestriction><saml2:Audience>" + o.audience + "</saml2:Audience></saml2:AudienceRestriction></saml2:Conditions>"
+        + (o.audience == null ? "" : "<saml2:AudienceRestriction><saml2:Audience>" + o.audience + "</saml2:Audience></saml2:AudienceRestriction>")
+        + "</saml2:Conditions>"
         + "<saml2:AuthnStatement AuthnInstant=\"" + SAML_TIME.format(now) + "\" SessionIndex=\"" + id + "\">"
         + "<saml2:AuthnContext><saml2:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport</saml2:AuthnContextClassRef></saml2:AuthnContext></saml2:AuthnStatement>"
         + "</saml2:Assertion>";
@@ -264,6 +268,17 @@ public class GenerateSamlFixtures {
         xml.replaceFirst("\\?>", "?><!DOCTYPE saml2p:Response>")));
     variants.put("N10", Variant.of(v1.with(o -> o.issuer = "http://www.okta.com/exk-other")));
     variants.put("N11", Variant.of(v1.with(o -> o.nameId = null)));
+    variants.put("N4", Variant.of(v1.with(o -> o.audience = "http://evil.example.com/")));
+    variants.put("N4b", Variant.of(v1.with(o -> o.audience = null)));
+    variants.put("N5", Variant.of(v1.with(o -> o.destination = "http://evil.example.com/login")));
+    variants.put("N5b", Variant.of(v1.with(o -> o.recipient = "http://evil.example.com/login")));
+    variants.put("N3", Variant.of(v1.with(o -> {
+      o.notBefore = now.minusSeconds(1200);
+      o.notOnOrAfter = now.minusSeconds(600);
+      o.scdNotOnOrAfter = now.minusSeconds(600);
+    })));
+    variants.put("N3b", Variant.of(v1.with(o -> o.notBefore = Instant.parse("2125-01-01T00:00:00Z"))));
+    variants.put("N3c", Variant.of(v1.with(o -> o.scdNotOnOrAfter = now.minusSeconds(600))));
 
     for (Map.Entry<String, Variant> entry : variants.entrySet()) {
       String response = build(entry.getValue(), now);

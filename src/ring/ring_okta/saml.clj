@@ -80,6 +80,10 @@
     (when-not (.isValid response nil)
       (let [^Exception cause (.getValidationException response)]
         (throw (invalid-saml-response (.getMessage cause) cause))))
+    ;; isValid skips its Audience check when the Assertion names no Audience,
+    ;; which would accept a response minted for any service provider.
+    (when (empty? (.getAudiences response))
+      (throw (invalid-saml-response "SAML Response Assertion has no Audience to match sp/@entityID")))
     response))
 
 (defn- name-id ^String [^SamlResponse response]
