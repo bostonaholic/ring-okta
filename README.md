@@ -34,6 +34,20 @@ implementation("dev.bostonaholic:ring-okta:1.1.0")
 </dependency>
 ```
 
+### Migrating from bostonaholic/ring-okta
+
+In your build file, replace the group `bostonaholic` with `dev.bostonaholic`. The artifact name `ring-okta` stays the same. The namespaces (`ring.middleware.okta` and `ring.ring-okta.*`) and the API do not change, so you do not need to change your code.
+
+The first version under `dev.bostonaholic` is `1.1.0`. No `1.0.x` version exists under the new group. The last release under `bostonaholic/ring-okta` is `1.0.7`, and Clojars still has it.
+
+A dependency can bring in `bostonaholic/ring-okta` transitively, next to `dev.bostonaholic/ring-okta`. Both jars hold the same namespaces. To keep only the new jar, put the lib symbol `bostonaholic/ring-okta` in an `:exclusions` vector on the dependency that brings it in. The `:exclusions [bostonaholic/ring-okta]` form works in both Leiningen and deps.edn. A Leiningen example:
+
+```clojure
+[example/lib "1.2.3" :exclusions [bostonaholic/ring-okta]]
+```
+
+In Gradle or Maven, exclude group `bostonaholic`, artifact `ring-okta`, from that dependency.
+
 ### Okta SAML Toolkit Dependency
 
 Since Okta doesn't publish the SAML Toolkit for Java, you must download it [here](https://support.okta.com/entries/25009573-Current-SAML-Toolkit-for-Java-Version). You then must `mvn install` it to your local maven repository. Check the [project.clj](./project.clj) for the version of the SAML Toolkit to download from Okta.
