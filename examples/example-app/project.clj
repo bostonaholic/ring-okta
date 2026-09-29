@@ -7,4 +7,5 @@
                  [dev.bostonaholic/ring-okta "2.0.0-SNAPSHOT"]
                  [compojure "1.6.2"]
                  [ring "1.8.1"]]
+  :main example-app.core
   :repl-options {:init-ns example-app.core})
