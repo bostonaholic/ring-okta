@@ -48,9 +48,15 @@ A dependency can bring in `bostonaholic/ring-okta` transitively, next to `dev.bo
 
 In Gradle or Maven, exclude group `bostonaholic`, artifact `ring-okta`, from that dependency.
 
-### Supported JDKs
+### Supported JDKs and Okta settings
 
-CI tests `ring-okta` on Temurin JDK 11, 17, 21, and 25.
+| ring-okta | SAML library | JDK | Okta SAML app signing |
+|---|---|---|---|
+| `2.0.0` and later | java-saml-core `2.9.0` | **Supported:** 11, 17, 21, and 25. CI tests each one.<br>**Not tested:** 8 and other versions. | **Supported:** RSA-SHA256, with the response and assertion both signed, the assertion only, or the response only.<br>**Not supported:** RSA-SHA1. |
+| `0.1.6` to `1.1.0` | Okta SAML Toolkit `1.0.12-000170-c7ed721` | **Not tested:** 8 to 15.<br>**Not supported:** 16 and later. Every login throws `IllegalAccessError` unless you start the JVM with `--add-exports=java.xml/com.sun.org.apache.xpath.internal.jaxp=ALL-UNNAMED`. | **Supported:** RSA-SHA256 or RSA-SHA1, with the response signed.<br>**Not supported:** the assertion signed only.<br>These versions do not check the Audience or Destination, so they accept a response that Okta made for another app. |
+| `0.1.0` to `0.1.5` | An earlier Okta SAML Toolkit | Not supported | Not supported |
+
+Okta has no SAML versions to choose from. What varies is each Okta app's signing settings, so the table lists those. Refer to **Okta Configuration** for the digest algorithms that `2.0.0` accepts.
 
 ### SAML Dependency
 
