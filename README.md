@@ -48,9 +48,11 @@ A dependency can bring in `bostonaholic/ring-okta` transitively, next to `dev.bo
 
 In Gradle or Maven, exclude group `bostonaholic`, artifact `ring-okta`, from that dependency.
 
-### Okta SAML Toolkit Dependency
+### SAML Dependency
 
-`ring-okta` depends on the Okta SAML Toolkit for Java, `com.okta/saml-toolkit` version `1.0.12-000170-c7ed721`, as declared in [project.clj](./project.clj). Okta does not publish this toolkit to a public Maven repository. This repository keeps a copy of the jar in [maven_repository/com/okta/saml-toolkit](./maven_repository/com/okta/saml-toolkit). Download the jar from there. Then install it into your local Maven repository, `~/.m2/repository`, with the `mvn install:install-file` goal.
+`ring-okta` validates Okta SAML responses with [java-saml-core](https://github.com/onelogin/java-saml) `2.9.0` (`com.onelogin/java-saml-core`, MIT License). Your build tool gets it from Maven Central with the other dependencies. You do not need a manual install.
+
+java-saml writes the full SAML response to its log at DEBUG level. Keep the `com.onelogin` logger above DEBUG in production, because anyone who can read those log lines can replay the response until it expires.
 
 ## Usage
 
@@ -72,6 +74,26 @@ In Gradle or Maven, exclude group `bostonaholic`, artifact `ring-okta`, from tha
       (wrap-okta "https://company.okta.com")))
 ```
 
+### Okta Configuration
+
+This section applies from version `2.0.0`. If you use `1.x`, refer to the [CHANGELOG.md](./CHANGELOG.md).
+
+`wrap-okta` reads the Okta configuration file from the `:okta-config` option, or from `okta-config.xml` on the classpath. The file holds one `application`. Its `md:EntityDescriptor` is the IdP metadata from your Okta app, unchanged. The `sp` element identifies your app. Copy its values from these Okta app fields:
+
+- `entityID`: "Audience URI (SP Entity ID)".
+- `assertionConsumerServiceURL`: "Single sign-on URL". This is the URL of your `POST /login` route.
+
+```xml
+<configuration><applications><application>
+  <md:EntityDescriptor entityID="http://www.okta.com/exk...">...unchanged Okta IdP metadata...</md:EntityDescriptor>
+  <sp entityID="https://app.example.com/" assertionConsumerServiceURL="https://app.example.com/login"/>
+</application></applications></configuration>
+```
+
+When a login fails, `ring-okta` throws an `ExceptionInfo`. `(:type (ex-data e))` is `:ring.ring-okta.saml/invalid-saml-response` for a response that fails validation. Your app decides the HTTP status.
+
+The tests use signed responses in the format that Okta documents. They do not come from a live Okta tenant. If a real Okta response fails to validate, [open an issue](https://github.com/bostonaholic/ring-okta/issues).
+
 ## Documentation
 
 - [API Docs](http://bostonaholic.github.io/ring-okta/index.html)
@@ -84,11 +106,13 @@ The test coverage summary is built with [cloverage](https://github.com/lshift/cl
 
 ## Development
 
-A build of this project from a clone needs no separate toolkit install. The `"local"` repository in `project.clj` resolves the toolkit jar from `maven_repository/`. To use this library in your own project, use the steps in **Okta SAML Toolkit Dependency** above. The command below installs a new toolkit version into `maven_repository/`, with `-DlocalRepositoryPath` set to that directory:
+The tests validate signed SAML responses in `test-resources/saml/` against `test-resources/okta-config.xml`. To regenerate them, run the command below with `JAVA_HOME` set to JDK 17 or later:
 
 ```shell
-mvn install:install-file -Dfile=saml-toolkit.jar -DgroupId=com.okta -DartifactId=saml-toolkit -Dpackaging=jar -Dversion=<version> -DcreateChecksum=true -DupdateReleaseInfo=true -DgeneratePom=true -DlocalRepositoryPath=/path/to/localRepo
+JAVA_HOME=/path/to/jdk17+ script/generate-saml-fixtures
 ```
+
+Each run makes new throwaway keys, so it rewrites `okta-config.xml` and every `.b64` file. Commit them together. The script deletes the keys when it exits. Never commit a private key or keystore.
 
 ## Releases
 

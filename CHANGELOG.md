@@ -17,6 +17,31 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 
+Version `2.0.0` breaks existing configurations. Each Okta configuration file needs a new `sp` element. Refer to **Okta Configuration** in the [README](./README.md).
+
+If you stay on `1.x` with JDK 16 or later, every login throws `IllegalAccessError` unless you start the JVM with `--add-exports=java.xml/com.sun.org.apache.xpath.internal.jaxp=ALL-UNNAMED`. The `1.x` toolkit jar is at [maven_repository/com/okta/saml-toolkit](https://github.com/bostonaholic/ring-okta/tree/v1.1.0/maven_repository/com/okta/saml-toolkit) in tag `v1.1.0`.
+
+### Changed
+
+- Replace the Okta SAML Toolkit `1.0.12-000170-c7ed721` with java-saml-core `2.9.0` from Maven Central. You do not need a manual install.
+- Each Okta configuration file needs an `sp` element with `entityID` and `assertionConsumerServiceURL`.
+- A SAML response that fails validation throws `ExceptionInfo` with `:type` `:ring.ring-okta.saml/invalid-saml-response`, not an OpenSAML or toolkit exception. The java-saml exception is the cause.
+- Bump the major version to `2.0.0`.
+
+### Removed
+
+- Remove `maven_repository/` and the toolkit jar.
+- Remove the dependencies `com.okta/saml-toolkit`, `org.opensaml/opensaml`, `org.bouncycastle/bcprov-jdk16`, `com.google.inject/guice`, `com.sun.xml.parsers/jaxp-ri`, `javax.servlet/javax.servlet-api`, and `org.clojure/data.codec`. Code that used them through `ring-okta` must declare them.
+
+### Fixed
+
+- Fix the `IllegalAccessError` that failed every login on JDK 16 and later.
+
+### Security
+
+- Pin `org.apache.santuario/xmlsec` `2.3.5` (CVE-2023-44483) and `org.apache.commons/commons-lang3` `3.18.0` (CVE-2025-48924) over the versions that java-saml-core brings in.
+- Remove `opensaml` `2.6.4` (CVE-2015-1796, no support since 2016), `bcprov-jdk16` `1.45`, and `commons-lang3` `3.0`, which have known advisories.
+
 ## [1.1.0] - 2026-09-29
 
 ### Changed

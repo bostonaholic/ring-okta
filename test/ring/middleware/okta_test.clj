@@ -1,5 +1,6 @@
 (ns ring.middleware.okta-test
   (:require [clojure.java.io :as io]
+            [clojure.string :as string]
             [clojure.test :refer [deftest testing is]]
             [clojure.test.helpers :refer [is-not]]
             [compojure.core :refer [GET defroutes]]
@@ -7,7 +8,8 @@
             [ring.middleware.okta :refer [wrap-okta okta-routes]]
             [ring.mock.request :refer [request]]
             [ring.ring-okta.session]
-            [ring.util.response :refer [response]]))
+            [ring.util.response :refer [response]])
+  (:import (clojure.lang ExceptionInfo)))
 
 (def okta-home "https://company.okta.com")
 (def default-okta-config "okta-config.xml")
@@ -118,6 +120,16 @@
                 response (handler (request :post "/login"))]
             (is (= :post (-> response :request-method)))
             (is (= "/login" (-> response :uri))))))
+
+      ;; Slice 1
+      (testing "login with a valid Okta response, no stub"
+        (let [handler (wrap-okta default-handler okta-home)
+              response (handler (assoc (request :post "/login")
+                                       :params {:SAMLResponse (string/trim (slurp (io/resource "saml/V1.b64")))
+                                                :RelayState "/dashboard"}))]
+          (is (= 303 (-> response :status)))
+          (is (= "/dashboard" (-> response :headers (get "Location"))))
+          (is (= "jane.doe@example.com" (-> response :session :okta/user)))))
 
       (testing "logout"
         (with-redefs [ring.ring-okta.session/logout identity]
