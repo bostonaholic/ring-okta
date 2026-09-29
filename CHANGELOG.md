@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-09-29
+
 ### Changed
 
 - Publish as `dev.bostonaholic/ring-okta`; `1.0.7` is the last release as `bostonaholic/ring-okta`.
@@ -197,7 +199,8 @@ All notable changes to this project will be documented in this file. This change
 
 - Initial release.
 
-[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v1.0.7...HEAD
+[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/bostonaholic/ring-okta/compare/v1.0.7...v1.1.0
 [1.0.7]: https://github.com/bostonaholic/ring-okta/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/bostonaholic/ring-okta/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/bostonaholic/ring-okta/compare/v1.0.4...v1.0.5
