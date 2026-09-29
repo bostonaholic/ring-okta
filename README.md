@@ -107,10 +107,23 @@ The process for releasing a new version is as follows:
 
 ### Release
 
+Nothing is pushed until the Clojars deploy succeeds, so a public tag always has a matching artifact.
+
 1. Commit changes with commit message `Release v<version>`
-2. Tag the commit with `git tag v<version>`
-3. Push changes to GitHub (including new tag with `--tags` option)
-4. Deploy release to [Clojars](https://clojars.org) with `lein deploy clojars`
+2. Tag the commit locally with `git tag v<version>`
+3. Deploy release to [Clojars](https://clojars.org) with `lein deploy clojars`
+4. Push changes to GitHub (including new tag with `--tags` option)
+5. Create the GitHub Release:
+
+   ```bash
+   gh release create v<version> --title v<version> --verify-tag --notes "**Changelog**: https://github.com/bostonaholic/ring-okta/blob/main/CHANGELOG.md#<changelog-anchor>
+
+   **Full Changelog**: https://github.com/bostonaholic/ring-okta/compare/v<previous-version>...v<version>"
+   ```
+
+   - `<previous-version>` is the version released before this one (e.g. `1.0.7`).
+   - `<changelog-anchor>` is GitHub's anchor for the version's `CHANGELOG.md` heading: lowercase it, drop the brackets and dots, and replace each space with `-`. The heading `## [1.1.0] - 2026-09-29` becomes `110---2026-09-29`.
+   - `--verify-tag` makes the command fail if the tag was not pushed, instead of creating a new tag.
 
 ### Post-steps
 
