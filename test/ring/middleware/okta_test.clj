@@ -11,7 +11,7 @@
             [ring.util.response :refer [response]])
   (:import (clojure.lang ExceptionInfo)))
 
-(def okta-home "https://company.okta.com")
+(def okta-home "https://example.okta.com")
 (def default-okta-config "okta-config.xml")
 (def custom-okta-config "test-resources/custom-okta-config.xml")
 

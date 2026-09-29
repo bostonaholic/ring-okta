@@ -4,7 +4,7 @@
             [ring.ring-okta.session :as session]))
 
 (defn- stub-respond-to-okta-post [& _]
-  {:redirect-url "http://foo.bar.com"
+  {:redirect-url "https://app.example.com/dashboard"
    :authenticated-user-email "foo@bar.com"})
 
 (deftest test-login
@@ -15,7 +15,7 @@
 
       (testing "redirect after login"
         (is (= 303 (-> (session/login request) :status)))
-        (is (= "http://foo.bar.com" (-> (session/login request) :headers (get "Location"))))))))
+        (is (= "https://app.example.com/dashboard" (-> (session/login request) :headers (get "Location"))))))))
 
 (deftest test-logout
   (let [request {:params {:foo "foo"}

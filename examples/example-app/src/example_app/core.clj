@@ -18,7 +18,7 @@
 ;; user from :session, so those middlewares must run before it.
 (def app
   (-> company-routes
-      (wrap-okta "https://company.okta.com" {:okta-config "resources/custom-okta-config.xml"})
+      (wrap-okta "https://example.okta.com" {:okta-config "resources/custom-okta-config.xml"})
       wrap-keyword-params
       wrap-params
       wrap-session))

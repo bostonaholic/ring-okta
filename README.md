@@ -81,7 +81,7 @@ java-saml writes the full SAML response to its log at DEBUG level. Keep the `com
 
 (def app
   (-> company-routes
-      (wrap-okta "https://company.okta.com")))
+      (wrap-okta "https://example.okta.com")))
 ```
 
 ### Okta Configuration
