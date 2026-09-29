@@ -30,11 +30,16 @@
             [lein-codox "0.10.8"]
             [lein-cloverage "1.2.4"]]
 
-  :codox {:namespaces [ring.middleware.okta]
+  ;; :jquery3 overrides the default theme's bundled jQuery 1.11.0 (vulnerable)
+  ;; with 3.6.4. The theme lives in codox-theme/, which only the :codox profile
+  ;; (merged by lein-codox itself) puts on the classpath, so it never ships in the jar.
+  :codox {:themes [:default :jquery3]
+          :namespaces [ring.middleware.okta]
           :output-path "./docs"
           :source-uri "https://github.com/bostonaholic/ring-okta/blob/v{version}/{filepath}#L{line}"}
 
-  :profiles {:dev {:resource-paths ["test-resources"]
+  :profiles {:codox {:resource-paths ["codox-theme"]}
+             :dev {:resource-paths ["test-resources"]
                    :dependencies [[ring-mock "0.1.5"]]}
              :1.10 {:resource-paths ["test-resources"]
                     :dependencies [[org.clojure/clojure "1.10.3"]]}
