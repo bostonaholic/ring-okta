@@ -50,7 +50,7 @@ In Gradle or Maven, exclude group `bostonaholic`, artifact `ring-okta`, from tha
 
 ### Okta SAML Toolkit Dependency
 
-Since Okta doesn't publish the SAML Toolkit for Java, you must download it [here](https://support.okta.com/entries/25009573-Current-SAML-Toolkit-for-Java-Version). You then must `mvn install` it to your local maven repository. Check the [project.clj](./project.clj) for the version of the SAML Toolkit to download from Okta.
+`ring-okta` depends on the Okta SAML Toolkit for Java, `com.okta/saml-toolkit` version `1.0.12-000170-c7ed721`, as declared in [project.clj](./project.clj). Okta does not publish this toolkit to a public Maven repository. This repository keeps a copy of the jar in [maven_repository/com/okta/saml-toolkit](./maven_repository/com/okta/saml-toolkit). Download the jar from there. Then install it into your local Maven repository, `~/.m2/repository`, with the `mvn install:install-file` goal.
 
 ## Usage
 
@@ -84,7 +84,7 @@ The test coverage summary is built with [cloverage](https://github.com/lshift/cl
 
 ## Development
 
-As described in **Usage** above, the Okta SAML Toolkit must be downloaded and installed to your local maven repository. When updating this dependency, here is how you can install the downloaded jar:
+A build of this project from a clone needs no separate toolkit install. The `"local"` repository in `project.clj` resolves the toolkit jar from `maven_repository/`. To use this library in your own project, use the steps in **Okta SAML Toolkit Dependency** above. The command below installs a new toolkit version into `maven_repository/`, with `-DlocalRepositoryPath` set to that directory:
 
 ```shell
 mvn install:install-file -Dfile=saml-toolkit.jar -DgroupId=com.okta -DartifactId=saml-toolkit -Dpackaging=jar -Dversion=<version> -DcreateChecksum=true -DupdateReleaseInfo=true -DgeneratePom=true -DlocalRepositoryPath=/path/to/localRepo
