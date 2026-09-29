@@ -31,10 +31,12 @@
             [lein-cloverage "1.2.4"]]
 
   :codox {:namespaces [ring.middleware.okta]
+          :themes [:default :jquery3]
           :output-path "./docs"
           :source-uri "https://github.com/bostonaholic/ring-okta/blob/v{version}/{filepath}#L{line}"}
 
-  :profiles {:dev {:resource-paths ["test-resources"]
+  :profiles {:codox {:resource-paths ["codox-theme"]}
+             :dev {:resource-paths ["test-resources"]
                    :dependencies [[ring-mock "0.1.5"]]}
              :1.10 {:resource-paths ["test-resources"]
                     :dependencies [[org.clojure/clojure "1.10.3"]]}
