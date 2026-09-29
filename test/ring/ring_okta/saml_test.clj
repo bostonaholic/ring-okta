@@ -56,7 +56,6 @@
 (deftest test-respond-to-okta-post
   (let [okta-config (slurp (io/resource "okta-config.xml"))]
 
-    ;; Slice 1
     (testing "accepts a current-format Okta response"
       (let [params {:SAMLResponse (fixture "V1") :RelayState "/dashboard"}
             expected {:redirect-url "/dashboard"
@@ -70,7 +69,6 @@
       (is (= {:type ::saml/invalid-saml-response :code ValidationError/INVALID_SIGNATURE}
              (rejection-code okta-config (fixture "N1")))))
 
-    ;; Slice 2
     (testing "rejects forged responses"
       (testing "signed by another key"
         (is (= {:type ::saml/invalid-saml-response :code ValidationError/INVALID_SIGNATURE}
@@ -119,7 +117,6 @@
                 :cause nil}
                (rejection okta-config {:SAMLResponse "" :RelayState "/dashboard"})))))
 
-    ;; Slice 3
     (testing "rejects responses for another service provider"
       (testing "wrong Audience"
         (is (= {:type ::saml/invalid-saml-response :code ValidationError/WRONG_AUDIENCE}
@@ -147,7 +144,6 @@
         (is (= {:type ::saml/invalid-saml-response :code ValidationError/WRONG_SUBJECTCONFIRMATION}
                (rejection-code okta-config (fixture "N3c"))))))
 
-    ;; Slice 4
     (testing "accepts each supported Okta signing setting"
       (testing "assertion signed, response unsigned"
         (is (= "jane.doe@example.com"
@@ -166,7 +162,6 @@
       (is (= {:type ::saml/invalid-saml-response :code ValidationError/INVALID_SIGNATURE}
              (rejection-code okta-config (fixture "V4")))))
 
-    ;; Slice 5
     (testing "accepts a 1.x config with <sp> added"
       (is (config-has? okta-config "/configuration/default"))
       (is (config-has? okta-config "/configuration/loginUri"))

@@ -121,7 +121,6 @@
             (is (= :post (-> response :request-method)))
             (is (= "/login" (-> response :uri))))))
 
-      ;; Slice 1
       (testing "login with a valid Okta response, no stub"
         (let [handler (wrap-okta default-handler okta-home)
               response (handler (assoc (request :post "/login")
@@ -131,7 +130,6 @@
           (is (= "/dashboard" (-> response :headers (get "Location"))))
           (is (= "jane.doe@example.com" (-> response :session :okta/user)))))
 
-      ;; Slice 3
       (testing "login with a response for another app, no stub"
         (let [handler (wrap-okta default-handler okta-home)
               thrown (is (thrown? ExceptionInfo
