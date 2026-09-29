@@ -132,6 +132,6 @@ Nothing is pushed until the Clojars deploy succeeds, so a public tag always has 
 
 ## License
 
-Copyright © 2025 Matthew Boston
+Copyright © 2026 Matthew Boston
 
 Released under the MIT License.
