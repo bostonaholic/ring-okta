@@ -90,6 +90,16 @@ This section applies from version `2.0.0`. If you use `1.x`, refer to the [CHANG
 </application></applications></configuration>
 ```
 
+The tests cover these Okta signing settings:
+
+| Okta "Response" and "Assertion Signature" | Signature algorithm | Digest algorithm | Result |
+|---|---|---|---|
+| Both signed | RSA-SHA256 | SHA256 | Accepted |
+| Assertion signed only | RSA-SHA256 | SHA256 | Accepted |
+| Response signed only | RSA-SHA256 | SHA256 | Accepted |
+| Both signed | RSA-SHA256 | SHA1 | Accepted |
+| Both signed | RSA-SHA1 | SHA1 | Rejected. Set the Okta app to RSA-SHA256. |
+
 When a login fails, `ring-okta` throws an `ExceptionInfo`. `(:type (ex-data e))` is `:ring.ring-okta.saml/invalid-saml-response` for a response that fails validation. Your app decides the HTTP status.
 
 The tests use signed responses in the format that Okta documents. They do not come from a live Okta tenant. If a real Okta response fails to validate, [open an issue](https://github.com/bostonaholic/ring-okta/issues).

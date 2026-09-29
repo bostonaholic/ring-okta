@@ -58,6 +58,7 @@
       (.fromValues {"onelogin.saml2.strict" true
                     "onelogin.saml2.security.want_assertions_signed" false
                     "onelogin.saml2.security.want_messages_signed" false
+                    "onelogin.saml2.security.reject_deprecated_alg" true
                     "onelogin.saml2.idp.entityid" idp-entity-id
                     "onelogin.saml2.idp.x509cert" idp-certificate
                     "onelogin.saml2.idp.single_sign_on_service.url" idp-sso-url

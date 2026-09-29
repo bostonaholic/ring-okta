@@ -68,6 +68,8 @@ public class GenerateSamlFixtures {
     KeyStore.PrivateKeyEntry signer;
     boolean signResponse = true;
     boolean signAssertion = true;
+    String signatureMethod = SignatureMethod.RSA_SHA256;
+    String digestMethod = DigestMethod.SHA256;
     String issuer = IDP_ENTITY_ID;
     String status = SUCCESS;
     /** Null leaves the Subject with no NameID. */
@@ -89,6 +91,8 @@ public class GenerateSamlFixtures {
       signer = other.signer;
       signResponse = other.signResponse;
       signAssertion = other.signAssertion;
+      signatureMethod = other.signatureMethod;
+      digestMethod = other.digestMethod;
       issuer = other.issuer;
       status = other.status;
       nameId = other.nameId;
@@ -161,24 +165,24 @@ public class GenerateSamlFixtures {
   }
 
   // Okta puts the enveloped Signature directly after the signed element's Issuer.
-  static void sign(Element element, KeyStore.PrivateKeyEntry signer) throws Exception {
+  static void sign(Element element, Opts o) throws Exception {
     element.setIdAttributeNS(null, "ID", true);
     XMLSignatureFactory factory = XMLSignatureFactory.getInstance("DOM");
     String exclusiveC14n = CanonicalizationMethod.EXCLUSIVE;
     Reference reference = factory.newReference("#" + element.getAttribute("ID"),
-        factory.newDigestMethod(DigestMethod.SHA256, null),
+        factory.newDigestMethod(o.digestMethod, null),
         List.of(factory.newTransform(Transform.ENVELOPED, (TransformParameterSpec) null),
                 factory.newTransform(exclusiveC14n, (TransformParameterSpec) null)),
         null, null);
     SignedInfo signedInfo = factory.newSignedInfo(
         factory.newCanonicalizationMethod(exclusiveC14n, (C14NMethodParameterSpec) null),
-        factory.newSignatureMethod(SignatureMethod.RSA_SHA256, null),
+        factory.newSignatureMethod(o.signatureMethod, null),
         List.of(reference));
     KeyInfoFactory keyInfoFactory = factory.getKeyInfoFactory();
     KeyInfo keyInfo = keyInfoFactory.newKeyInfo(
-        List.of(keyInfoFactory.newX509Data(List.of((X509Certificate) signer.getCertificate()))));
+        List.of(keyInfoFactory.newX509Data(List.of((X509Certificate) o.signer.getCertificate()))));
     Element issuer = (Element) element.getElementsByTagNameNS(ASSERTION_NS, "Issuer").item(0);
-    DOMSignContext context = new DOMSignContext(signer.getPrivateKey(), element, issuer.getNextSibling());
+    DOMSignContext context = new DOMSignContext(o.signer.getPrivateKey(), element, issuer.getNextSibling());
     context.setDefaultNamespacePrefix("ds");
     factory.newXMLSignature(signedInfo, keyInfo).sign(context);
   }
@@ -195,8 +199,8 @@ public class GenerateSamlFixtures {
   static String build(Variant variant, Instant now) throws Exception {
     Opts o = variant.opts();
     Document document = parse(responseXml(newId(), assertionXml(newId(), o, now), o, now));
-    if (o.signAssertion) sign(firstAssertion(document), o.signer);
-    if (o.signResponse) sign(document.getDocumentElement(), o.signer);
+    if (o.signAssertion) sign(firstAssertion(document), o);
+    if (o.signResponse) sign(document.getDocumentElement(), o);
     variant.afterSigning().accept(document);
     return variant.afterSerializing().apply(serialize(document));
   }
@@ -257,6 +261,12 @@ public class GenerateSamlFixtures {
     Map<String, Variant> variants = new LinkedHashMap<>();
     variants.put("V1", Variant.of(v1));
     variants.put("V2", Variant.of(v2));
+    variants.put("V3", Variant.of(v1.with(o -> o.signAssertion = false)));
+    variants.put("V4", Variant.of(v1.with(o -> {
+      o.signatureMethod = SignatureMethod.RSA_SHA1;
+      o.digestMethod = DigestMethod.SHA1;
+    })));
+    variants.put("V5", Variant.of(v1.with(o -> o.digestMethod = DigestMethod.SHA1)));
     variants.put("N1", Variant.of(v1).afterSigning(document ->
         document.getElementsByTagNameNS(ASSERTION_NS, "NameID").item(0).setTextContent("attacker@evil.example.com")));
     variants.put("N2", Variant.of(v1.with(o -> o.signer = evil)));

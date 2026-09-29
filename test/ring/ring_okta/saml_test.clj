@@ -145,4 +145,23 @@
                (rejection-code okta-config (fixture "N3b")))))
       (testing "SubjectConfirmationData expired"
         (is (= {:type ::saml/invalid-saml-response :code ValidationError/WRONG_SUBJECTCONFIRMATION}
-               (rejection-code okta-config (fixture "N3c"))))))))
+               (rejection-code okta-config (fixture "N3c"))))))
+
+    ;; Slice 4
+    (testing "accepts each supported Okta signing setting"
+      (testing "assertion signed, response unsigned"
+        (is (= "jane.doe@example.com"
+               (:authenticated-user-email
+                (respond-to-okta-post okta-config {:SAMLResponse (fixture "V2") :RelayState "/dashboard"})))))
+      (testing "response signed, assertion unsigned"
+        (is (= "jane.doe@example.com"
+               (:authenticated-user-email
+                (respond-to-okta-post okta-config {:SAMLResponse (fixture "V3") :RelayState "/dashboard"})))))
+      (testing "SHA-1 digest under an RSA-SHA256 signature"
+        (is (= "jane.doe@example.com"
+               (:authenticated-user-email
+                (respond-to-okta-post okta-config {:SAMLResponse (fixture "V5") :RelayState "/dashboard"}))))))
+
+    (testing "rejects RSA-SHA1 signatures"
+      (is (= {:type ::saml/invalid-saml-response :code ValidationError/INVALID_SIGNATURE}
+             (rejection-code okta-config (fixture "V4")))))))

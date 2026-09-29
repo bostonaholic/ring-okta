@@ -26,6 +26,8 @@ If you stay on `1.x` with JDK 16 or later, every login throws `IllegalAccessErro
 - Replace the Okta SAML Toolkit `1.0.12-000170-c7ed721` with java-saml-core `2.9.0` from Maven Central. You do not need a manual install.
 - Each Okta configuration file needs an `sp` element with `entityID` and `assertionConsumerServiceURL`.
 - A SAML response that fails validation throws `ExceptionInfo` with `:type` `:ring.ring-okta.saml/invalid-saml-response`, not an OpenSAML or toolkit exception. The java-saml exception is the cause.
+- Reject a SAML response signed with RSA-SHA1. Set the Okta app to RSA-SHA256 before you upgrade.
+- Responses with both the response and the assertion signed, or with only the response signed, keep the `1.x` result.
 - Bump the major version to `2.0.0`.
 
 ### Removed
@@ -36,10 +38,12 @@ If you stay on `1.x` with JDK 16 or later, every login throws `IllegalAccessErro
 ### Fixed
 
 - Fix the `IllegalAccessError` that failed every login on JDK 16 and later.
+- Accept a SAML response that Okta signs on the assertion only. `1.x` rejected it.
 
 ### Security
 
 - Reject a SAML response for another service provider: a wrong Audience, a wrong Destination, a wrong `SubjectConfirmationData` Recipient, or no Audience at all. `1.1.0` accepted a wrong Audience and a wrong Destination.
+- Reject RSA-SHA1 signatures. `1.1.0` accepted them.
 - Pin `org.apache.santuario/xmlsec` `2.3.5` (CVE-2023-44483) and `org.apache.commons/commons-lang3` `3.18.0` (CVE-2025-48924) over the versions that java-saml-core brings in.
 - Remove `opensaml` `2.6.4` (CVE-2015-1796, no support since 2016), `bcprov-jdk16` `1.45`, and `commons-lang3` `3.0`, which have known advisories.
 
