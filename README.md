@@ -1,6 +1,6 @@
 # ring-okta
 
-[![Build and Test](https://github.com/bostonaholic/ring-okta/actions/workflows/build-and-test.yml/badge.svg?branch=main)](https://github.com/bostonaholic/ring-okta/actions/workflows/build-and-test.yml) [![Clojars Project](https://img.shields.io/clojars/v/bostonaholic/ring-okta.svg)](https://clojars.org/bostonaholic/ring-okta)
+[![Build and Test](https://github.com/bostonaholic/ring-okta/actions/workflows/build-and-test.yml/badge.svg?branch=main)](https://github.com/bostonaholic/ring-okta/actions/workflows/build-and-test.yml) [![Clojars Project](https://img.shields.io/clojars/v/dev.bostonaholic/ring-okta.svg)](https://clojars.org/dev.bostonaholic/ring-okta)
 
 Ring middleware for Okta Single Sign-on.
 
@@ -9,30 +9,44 @@ Ring middleware for Okta Single Sign-on.
 ### Leiningen/Boot
 
 ```clojure
-[bostonaholic/ring-okta "1.0.7"]
+[dev.bostonaholic/ring-okta "1.1.0"]
 ```
 
 ### Clojure CLI/deps.edn
 
 ```clojure
-bostonaholic/ring-okta {:mvn/version "1.0.7"}
+dev.bostonaholic/ring-okta {:mvn/version "1.1.0"}
 ```
 
 ### Gradle
 
 ```gradle
-implementation("bostonaholic:ring-okta:1.0.7")
+implementation("dev.bostonaholic:ring-okta:1.1.0")
 ```
 
 ### Maven
 
 ```xml
 <dependency>
-  <groupId>bostonaholic</groupId>
+  <groupId>dev.bostonaholic</groupId>
   <artifactId>ring-okta</artifactId>
-  <version>1.0.7</version>
+  <version>1.1.0</version>
 </dependency>
 ```
+
+### Migrating from bostonaholic/ring-okta
+
+In your build file, replace the group `bostonaholic` with `dev.bostonaholic`. The artifact name `ring-okta` stays the same. The namespaces (`ring.middleware.okta` and `ring.ring-okta.*`) and the API do not change, so you do not need to change your code.
+
+The first version under `dev.bostonaholic` is `1.1.0`. No `1.0.x` version exists under the new group. The last release under `bostonaholic/ring-okta` is `1.0.7`, and Clojars still has it.
+
+A dependency can bring in `bostonaholic/ring-okta` transitively, next to `dev.bostonaholic/ring-okta`. Both jars hold the same namespaces. To keep only the new jar, put the lib symbol `bostonaholic/ring-okta` in an `:exclusions` vector on the dependency that brings it in. The `:exclusions [bostonaholic/ring-okta]` form works in both Leiningen and deps.edn. A Leiningen example:
+
+```clojure
+[example/lib "1.2.3" :exclusions [bostonaholic/ring-okta]]
+```
+
+In Gradle or Maven, exclude group `bostonaholic`, artifact `ring-okta`, from that dependency.
 
 ### Okta SAML Toolkit Dependency
 

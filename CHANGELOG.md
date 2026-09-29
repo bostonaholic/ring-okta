@@ -19,6 +19,7 @@ All notable changes to this project will be documented in this file. This change
 
 ### Changed
 
+- Publish as `dev.bostonaholic/ring-okta`; `1.0.7` is the last release as `bostonaholic/ring-okta`.
 - Move ring-mock to dev dependency.
 - Replace deprecated function `redirect-after-post`.
 - Upgrade ring-core 1.15.2.
