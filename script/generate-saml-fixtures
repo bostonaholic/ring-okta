@@ -34,6 +34,7 @@ generate_keystore() {
 
 echo "==> Generating keys..."
 generate_keystore idp
+generate_keystore evil
 
 echo "==> Generating fixtures..."
 rm -f test-resources/saml/*.b64

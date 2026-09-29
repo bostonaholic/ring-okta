@@ -68,4 +68,53 @@
 
     (testing "rejects a tampered response"
       (is (= {:type ::saml/invalid-saml-response :code ValidationError/INVALID_SIGNATURE}
-             (rejection-code okta-config (fixture "N1")))))))
+             (rejection-code okta-config (fixture "N1")))))
+
+    ;; Slice 2
+    (testing "rejects forged responses"
+      (testing "signed by another key"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/INVALID_SIGNATURE}
+               (rejection-code okta-config (fixture "N2")))))
+      (testing "unsigned"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/NO_SIGNATURE_FOUND}
+               (rejection-code okta-config (fixture "N6")))))
+      (testing "with an unsigned assertion before the signed one"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/WRONG_NUMBER_OF_ASSERTIONS}
+               (rejection-code okta-config (fixture "N7a"))))
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/WRONG_NUMBER_OF_ASSERTIONS}
+               (rejection-code okta-config (fixture "N7b")))))
+      (testing "issued by another Okta app"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/WRONG_ISSUER}
+               (rejection-code okta-config (fixture "N10"))))))
+
+    (testing "rejects unusable responses"
+      (testing "with a non-Success status"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/STATUS_CODE_IS_NOT_SUCCESS}
+               (rejection-code okta-config (fixture "N8")))))
+      (testing "with a DOCTYPE"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/INVALID_XML_FORMAT}
+               (rejection-code okta-config (fixture "N9")))))
+      (testing "that is not base64"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/INVALID_XML_FORMAT}
+               (rejection-code okta-config "not base64!"))))
+      (testing "that is base64 of text that is not XML"
+        ;; "aGVsbG8=" is base64 of "hello"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/INVALID_XML_FORMAT}
+               (rejection-code okta-config "aGVsbG8="))))
+      (testing "with no NameID"
+        (is (= {:type ::saml/invalid-saml-response :code ValidationError/NO_NAMEID}
+               (rejection-code okta-config (fixture "N11"))))))
+
+    (testing "rejects a missing SAMLResponse"
+      (testing "nil"
+        (is (= {:type ::saml/invalid-saml-response
+                :code nil
+                :message "SAMLResponse parameter is missing or empty"
+                :cause nil}
+               (rejection okta-config {:SAMLResponse nil :RelayState "/dashboard"}))))
+      (testing "empty"
+        (is (= {:type ::saml/invalid-saml-response
+                :code nil
+                :message "SAMLResponse parameter is missing or empty"
+                :cause nil}
+               (rejection okta-config {:SAMLResponse "" :RelayState "/dashboard"})))))))

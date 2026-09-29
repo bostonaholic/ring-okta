@@ -65,17 +65,35 @@
                     "onelogin.saml2.sp.assertion_consumer_service.url" sp-acs-url})
       (.build)))
 
-(defn- validated-response ^SamlResponse [settings ^String acs-url ^String saml-response]
-  (let [^SamlResponse response (SamlResponse. settings acs-url saml-response)]
+(defn- invalid-saml-response
+  ([message] (ex-info message {:type ::invalid-saml-response}))
+  ([message cause] (ex-info message {:type ::invalid-saml-response} cause)))
+
+(defn- parse-saml-response ^SamlResponse [settings ^String acs-url ^String saml-response]
+  (try
+    (SamlResponse. settings acs-url saml-response)
+    (catch Exception e
+      (throw (invalid-saml-response (.getMessage e) e)))))
+
+(defn- validated-response ^SamlResponse [settings acs-url saml-response]
+  (let [^SamlResponse response (parse-saml-response settings acs-url saml-response)]
     (when-not (.isValid response nil)
       (let [^Exception cause (.getValidationException response)]
-        (throw (ex-info (.getMessage cause) {:type ::invalid-saml-response} cause))))
+        (throw (invalid-saml-response (.getMessage cause) cause))))
     response))
 
+(defn- name-id ^String [^SamlResponse response]
+  (try
+    (.getNameId response)
+    (catch Exception e
+      (throw (invalid-saml-response (.getMessage e) e)))))
+
 (defn- authenticated-user-email [okta-config saml-response]
+  (when (string/blank? saml-response)
+    (throw (invalid-saml-response "SAMLResponse parameter is missing or empty")))
   (let [config (parse-okta-config okta-config)
-        ^SamlResponse response (validated-response (saml-settings config) (:sp-acs-url config) saml-response)]
-    (string/lower-case (.getNameId response))))
+        response (validated-response (saml-settings config) (:sp-acs-url config) saml-response)]
+    (string/lower-case (name-id response))))
 
 (defn respond-to-okta-post [okta-config params]
   {:redirect-url (:RelayState params)

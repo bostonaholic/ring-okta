@@ -5,7 +5,8 @@
 //
 // Usage: java script/GenerateSamlFixtures.java <keysDir> <testResourcesDir>
 //
-// <keysDir> holds idp.p12 (alias idp, password changeit). Run it through
+// <keysDir> holds idp.p12 and evil.p12 (aliases idp and evil, password
+// changeit). Run it through
 // script/generate-saml-fixtures, which makes the keys and deletes them after.
 // Needs JDK 17 or later.
 import java.io.ByteArrayInputStream;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 import javax.xml.crypto.dsig.CanonicalizationMethod;
 import javax.xml.crypto.dsig.DigestMethod;
 import javax.xml.crypto.dsig.Reference;
@@ -55,6 +57,7 @@ public class GenerateSamlFixtures {
   static final String ACS_URL = "http://localhost:3000/login";
   static final String SSO_URL = "https://example.okta.com/app/example_app/exk-test/sso/saml";
   static final String NAME_ID = "Jane.Doe@Example.com";
+  static final String SUCCESS = "urn:oasis:names:tc:SAML:2.0:status:Success";
   static final String KEYSTORE_PASSWORD = "changeit";
   static final Instant FAR_FUTURE = Instant.parse("2126-01-01T00:00:00Z");
   static final DateTimeFormatter SAML_TIME =
@@ -62,20 +65,59 @@ public class GenerateSamlFixtures {
 
   /** The properties of one Response. The defaults describe V1; each variant changes one. */
   static final class Opts {
+    KeyStore.PrivateKeyEntry signer;
     boolean signResponse = true;
     boolean signAssertion = true;
+    String issuer = IDP_ENTITY_ID;
+    String status = SUCCESS;
+    /** Null leaves the Subject with no NameID. */
+    String nameId = NAME_ID;
     String audience = SP_ENTITY_ID;
     String destination = ACS_URL;
     Instant notBefore;
     Instant notOnOrAfter = FAR_FUTURE;
     Instant scdNotOnOrAfter = FAR_FUTURE;
 
-    Opts(Instant now) {
+    Opts(KeyStore.PrivateKeyEntry signer, Instant now) {
+      this.signer = signer;
       notBefore = now.minusSeconds(300);
+    }
+
+    Opts(Opts other) {
+      signer = other.signer;
+      signResponse = other.signResponse;
+      signAssertion = other.signAssertion;
+      issuer = other.issuer;
+      status = other.status;
+      nameId = other.nameId;
+      audience = other.audience;
+      destination = other.destination;
+      notBefore = other.notBefore;
+      notOnOrAfter = other.notOnOrAfter;
+      scdNotOnOrAfter = other.scdNotOnOrAfter;
+    }
+
+    Opts with(Consumer<Opts> change) {
+      Opts copy = new Opts(this);
+      change.accept(copy);
+      return copy;
     }
   }
 
-  record Variant(Opts opts, KeyStore.PrivateKeyEntry signer, Consumer<Document> afterSigning) {}
+  /** A Response, plus changes made to its signed document or to its final XML text. */
+  record Variant(Opts opts, Consumer<Document> afterSigning, UnaryOperator<String> afterSerializing) {
+    static Variant of(Opts opts) {
+      return new Variant(opts, document -> {}, UnaryOperator.identity());
+    }
+
+    Variant afterSigning(Consumer<Document> change) {
+      return new Variant(opts, change, afterSerializing);
+    }
+
+    Variant afterSerializing(UnaryOperator<String> change) {
+      return new Variant(opts, afterSigning, change);
+    }
+  }
 
   static String newId() {
     return "id" + UUID.randomUUID().toString().replace("-", "");
@@ -83,8 +125,9 @@ public class GenerateSamlFixtures {
 
   static String assertionXml(String id, Opts o, Instant now) {
     return "<saml2:Assertion xmlns:saml2=\"" + ASSERTION_NS + "\" ID=\"" + id + "\" IssueInstant=\"" + SAML_TIME.format(now) + "\" Version=\"2.0\">"
-        + "<saml2:Issuer Format=\"urn:oasis:names:tc:SAML:2.0:nameid-format:entity\">" + IDP_ENTITY_ID + "</saml2:Issuer>"
-        + "<saml2:Subject><saml2:NameID Format=\"urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified\">" + NAME_ID + "</saml2:NameID>"
+        + "<saml2:Issuer Format=\"urn:oasis:names:tc:SAML:2.0:nameid-format:entity\">" + o.issuer + "</saml2:Issuer>"
+        + "<saml2:Subject>"
+        + (o.nameId == null ? "" : "<saml2:NameID Format=\"urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified\">" + o.nameId + "</saml2:NameID>")
         + "<saml2:SubjectConfirmation Method=\"urn:oasis:names:tc:SAML:2.0:cm:bearer\">"
         + "<saml2:SubjectConfirmationData NotOnOrAfter=\"" + SAML_TIME.format(o.scdNotOnOrAfter) + "\" Recipient=\"" + ACS_URL + "\"/>"
         + "</saml2:SubjectConfirmation></saml2:Subject>"
@@ -97,8 +140,8 @@ public class GenerateSamlFixtures {
 
   static String responseXml(String id, String assertion, Opts o, Instant now) {
     return "<saml2p:Response xmlns:saml2p=\"" + PROTOCOL_NS + "\" Destination=\"" + o.destination + "\" ID=\"" + id + "\" IssueInstant=\"" + SAML_TIME.format(now) + "\" Version=\"2.0\">"
-        + "<saml2:Issuer xmlns:saml2=\"" + ASSERTION_NS + "\" Format=\"urn:oasis:names:tc:SAML:2.0:nameid-format:entity\">" + IDP_ENTITY_ID + "</saml2:Issuer>"
-        + "<saml2p:Status><saml2p:StatusCode Value=\"urn:oasis:names:tc:SAML:2.0:status:Success\"/></saml2p:Status>"
+        + "<saml2:Issuer xmlns:saml2=\"" + ASSERTION_NS + "\" Format=\"urn:oasis:names:tc:SAML:2.0:nameid-format:entity\">" + o.issuer + "</saml2:Issuer>"
+        + "<saml2p:Status><saml2p:StatusCode Value=\"" + o.status + "\"/></saml2p:Status>"
         + assertion
         + "</saml2p:Response>";
   }
@@ -148,10 +191,10 @@ public class GenerateSamlFixtures {
   static String build(Variant variant, Instant now) throws Exception {
     Opts o = variant.opts();
     Document document = parse(responseXml(newId(), assertionXml(newId(), o, now), o, now));
-    if (o.signAssertion) sign(firstAssertion(document), variant.signer());
-    if (o.signResponse) sign(document.getDocumentElement(), variant.signer());
-    if (variant.afterSigning() != null) variant.afterSigning().accept(document);
-    return serialize(document);
+    if (o.signAssertion) sign(firstAssertion(document), o.signer);
+    if (o.signResponse) sign(document.getDocumentElement(), o.signer);
+    variant.afterSigning().accept(document);
+    return variant.afterSerializing().apply(serialize(document));
   }
 
   static KeyStore.PrivateKeyEntry loadKey(Path keystore, String alias) throws Exception {
@@ -193,13 +236,34 @@ public class GenerateSamlFixtures {
     Files.createDirectories(samlDir);
 
     KeyStore.PrivateKeyEntry idp = loadKey(keysDir.resolve("idp.p12"), "idp");
+    KeyStore.PrivateKeyEntry evil = loadKey(keysDir.resolve("evil.p12"), "evil");
     Instant now = Instant.now();
-    Opts v1 = new Opts(now);
+    Opts v1 = new Opts(idp, now);
+    Opts v2 = v1.with(o -> o.signResponse = false);
+    String unsignedEvilAssertion = assertionXml(newId(), v1.with(o -> o.nameId = "attacker@evil.example.com"), now);
+    Consumer<Document> insertEvilAssertion = document -> {
+      Element signed = firstAssertion(document);
+      try {
+        signed.getParentNode().insertBefore(document.importNode(parse(unsignedEvilAssertion).getDocumentElement(), true), signed);
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
+    };
 
     Map<String, Variant> variants = new LinkedHashMap<>();
-    variants.put("V1", new Variant(v1, idp, null));
-    variants.put("N1", new Variant(v1, idp, document ->
+    variants.put("V1", Variant.of(v1));
+    variants.put("V2", Variant.of(v2));
+    variants.put("N1", Variant.of(v1).afterSigning(document ->
         document.getElementsByTagNameNS(ASSERTION_NS, "NameID").item(0).setTextContent("attacker@evil.example.com")));
+    variants.put("N2", Variant.of(v1.with(o -> o.signer = evil)));
+    variants.put("N6", Variant.of(v1.with(o -> { o.signResponse = false; o.signAssertion = false; })));
+    variants.put("N7a", Variant.of(v2).afterSigning(insertEvilAssertion));
+    variants.put("N7b", Variant.of(v1).afterSigning(insertEvilAssertion));
+    variants.put("N8", Variant.of(v1.with(o -> o.status = "urn:oasis:names:tc:SAML:2.0:status:Responder")));
+    variants.put("N9", Variant.of(v1).afterSerializing(xml ->
+        xml.replaceFirst("\\?>", "?><!DOCTYPE saml2p:Response>")));
+    variants.put("N10", Variant.of(v1.with(o -> o.issuer = "http://www.okta.com/exk-other")));
+    variants.put("N11", Variant.of(v1.with(o -> o.nameId = null)));
 
     for (Map.Entry<String, Variant> entry : variants.entrySet()) {
       String response = build(entry.getValue(), now);
