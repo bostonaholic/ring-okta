@@ -48,6 +48,10 @@ A dependency can bring in `bostonaholic/ring-okta` transitively, next to `dev.bo
 
 In Gradle or Maven, exclude group `bostonaholic`, artifact `ring-okta`, from that dependency.
 
+### Supported JDKs
+
+CI tests `ring-okta` on Temurin JDK 11, 17, 21, and 25.
+
 ### SAML Dependency
 
 `ring-okta` validates Okta SAML responses with [java-saml-core](https://github.com/onelogin/java-saml) `2.9.0` (`com.onelogin/java-saml-core`, MIT License). Your build tool gets it from Maven Central with the other dependencies. You do not need a manual install.
