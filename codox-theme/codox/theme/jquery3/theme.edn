@@ -1,2 +1,5 @@
+;; Overrides the jQuery v1.11.0 bundled with Codox's default theme. List this
+;; theme after :default in :themes so its copy of js/jquery.min.js wins. No
+;; transforms: the default theme already adds the <script> tag.
 {:transforms []
  :resources ["js/jquery.min.js"]}
