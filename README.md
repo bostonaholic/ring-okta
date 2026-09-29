@@ -1,6 +1,6 @@
 # ring-okta
 
-[![Build and Test](https://github.com/bostonaholic/ring-okta/actions/workflows/build-and-test.yml/badge.svg?branch=main)](https://github.com/bostonaholic/ring-okta/actions/workflows/build-and-test.yml) [![Clojars Project](https://img.shields.io/clojars/v/bostonaholic/ring-okta.svg)](https://clojars.org/bostonaholic/ring-okta)
+[![Build and Test](https://github.com/bostonaholic/ring-okta/actions/workflows/build-and-test.yml/badge.svg?branch=main)](https://github.com/bostonaholic/ring-okta/actions/workflows/build-and-test.yml) [![Clojars Project](https://img.shields.io/clojars/v/dev.bostonaholic/ring-okta.svg)](https://clojars.org/dev.bostonaholic/ring-okta)
 
 Ring middleware for Okta Single Sign-on.
 
@@ -9,28 +9,28 @@ Ring middleware for Okta Single Sign-on.
 ### Leiningen/Boot
 
 ```clojure
-[bostonaholic/ring-okta "1.0.7"]
+[dev.bostonaholic/ring-okta "1.1.0"]
 ```
 
 ### Clojure CLI/deps.edn
 
 ```clojure
-bostonaholic/ring-okta {:mvn/version "1.0.7"}
+dev.bostonaholic/ring-okta {:mvn/version "1.1.0"}
 ```
 
 ### Gradle
 
 ```gradle
-implementation("bostonaholic:ring-okta:1.0.7")
+implementation("dev.bostonaholic:ring-okta:1.1.0")
 ```
 
 ### Maven
 
 ```xml
 <dependency>
-  <groupId>bostonaholic</groupId>
+  <groupId>dev.bostonaholic</groupId>
   <artifactId>ring-okta</artifactId>
-  <version>1.0.7</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 
