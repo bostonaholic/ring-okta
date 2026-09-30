@@ -9,19 +9,19 @@ Ring middleware for Okta Single Sign-on.
 ### Leiningen/Boot
 
 ```clojure
-[dev.bostonaholic/ring-okta "1.1.0"]
+[dev.bostonaholic/ring-okta "2.0.0"]
 ```
 
 ### Clojure CLI/deps.edn
 
 ```clojure
-dev.bostonaholic/ring-okta {:mvn/version "1.1.0"}
+dev.bostonaholic/ring-okta {:mvn/version "2.0.0"}
 ```
 
 ### Gradle
 
 ```gradle
-implementation("dev.bostonaholic:ring-okta:1.1.0")
+implementation("dev.bostonaholic:ring-okta:2.0.0")
 ```
 
 ### Maven
@@ -30,7 +30,7 @@ implementation("dev.bostonaholic:ring-okta:1.1.0")
 <dependency>
   <groupId>dev.bostonaholic</groupId>
   <artifactId>ring-okta</artifactId>
-  <version>1.1.0</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 

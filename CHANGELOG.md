@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file. This change
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-09-29
+
 Version `2.0.0` breaks existing configurations. Each Okta configuration file needs a new `sp` element. Refer to [Okta Configuration](https://github.com/bostonaholic/ring-okta/blob/main/README.md#okta-configuration) in the README.
 
 If you stay on `1.x` with JDK 16 or later, every login throws `IllegalAccessError` unless you start the JVM with `--add-exports=java.xml/com.sun.org.apache.xpath.internal.jaxp=ALL-UNNAMED`. The `1.x` toolkit jar is at [maven_repository/com/okta/saml-toolkit](https://github.com/bostonaholic/ring-okta/tree/v1.1.0/maven_repository/com/okta/saml-toolkit) in tag `v1.1.0`.
@@ -234,7 +236,8 @@ If you stay on `1.x` with JDK 16 or later, every login throws `IllegalAccessErro
 
 - Initial release.
 
-[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/bostonaholic/ring-okta/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/bostonaholic/ring-okta/compare/v1.1.0...v2.0.0
 [1.1.0]: https://github.com/bostonaholic/ring-okta/compare/v1.0.7...v1.1.0
 [1.0.7]: https://github.com/bostonaholic/ring-okta/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/bostonaholic/ring-okta/compare/v1.0.5...v1.0.6
