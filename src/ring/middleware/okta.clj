@@ -29,7 +29,7 @@
   handler                - the ring handler function
 
   okta-home              - the URL to be redirected to for Okta login
-                           e.g. https://company.okta.com
+                           e.g. https://example.okta.com
 
   Accepts the following options:
 

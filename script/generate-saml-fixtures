@@ -1,0 +1,41 @@
+#! /bin/bash
+
+# script/generate-saml-fixtures: Regenerate the signed SAML test fixtures in
+#                                test-resources/ with new throwaway keys.
+#                                Needs JDK 17 or later.
+#
+# Each run makes new keys, so it rewrites test-resources/okta-config.xml and
+# every test-resources/saml/*.b64 file. Commit them together. The keys are
+# deleted on exit and are never written inside the repository.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+[ -z "$DEBUG" ] || set -x
+
+if [ -n "$JAVA_HOME" ]; then
+  java="$JAVA_HOME/bin/java"
+  keytool="$JAVA_HOME/bin/keytool"
+else
+  java="java"
+  keytool="keytool"
+fi
+
+keys_dir="$(mktemp -d)"
+trap 'rm -rf "$keys_dir"' EXIT
+
+generate_keystore() {
+  "$keytool" -genkeypair -alias "$1" -keyalg RSA -keysize 2048 \
+    -storetype PKCS12 -keystore "$keys_dir/$1.p12" \
+    -storepass changeit -keypass changeit -validity 40000 \
+    -dname "CN=ring-okta test $1" 2>/dev/null
+}
+
+echo "==> Generating keys..."
+generate_keystore idp
+generate_keystore evil
+
+echo "==> Generating fixtures..."
+rm -f test-resources/saml/*.b64
+"$java" script/GenerateSamlFixtures.java "$keys_dir" test-resources

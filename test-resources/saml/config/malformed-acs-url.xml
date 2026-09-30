@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Test input: a valid okta-config.xml except that sp/@assertionConsumerServiceURL is not a URL. -->
+<configuration>
+  <applications>
+    <application>
+      <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://www.okta.com/exk-test">
+        <md:IDPSSODescriptor WantAuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+          <md:KeyDescriptor use="signing">
+            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>MIIDCTCCAfGgAwIBAgIIZAKw8bG4YS4wDQYJKoZIhvcNAQEMBQAwMjEXMBUGA1UEChMOcmluZy1va3RhLXRlc3QxFzAVBgNVBAMTDmNvbmZpZy1maXh0dXJlMCAXDTI2MDkyOTIwNDgwMFoYDzIxMzYwNDA1MjA0ODAwWjAyMRcwFQYDVQQKEw5yaW5nLW9rdGEtdGVzdDEXMBUGA1UEAxMOY29uZmlnLWZpeHR1cmUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDTk3FuJ4QmWoZKR5W1iDipDq0n0JnEXSkg0d0VQGIxbDzOgl5OLVO058/hk/7BZaUraoZsXbI9BBsJICyypPSycP7JqXVPrBXlLc3CfACm2Xsmks+lMMpx1QcmbVN4ZNzn6Ehh1nnZDTc3y4tZW/ahFuOMZUXiofWTsaXjJKByEBhWdG0iQU9acWFS0itUoKifJvRA2/qxALqefEwpOK4WtWEYm6HyEIXdkLpSfTbwSACZalynKdMoq5a4RPfQIMRZ+iljFQRJ14eXEmrzhjh4KJV+R5q36n3FkTPiXk3oa7+b83tzxreBFuQ7Nq78wN61GKcaTksOTZ+A/TkeA2DbAgMBAAGjITAfMB0GA1UdDgQWBBTI1FQwNaN9/kRn52bCNhlKVh+6WDANBgkqhkiG9w0BAQwFAAOCAQEAuMFrngFIsz+ixF3/I/MnQiTKqkFf01wZawOmfWhUcCFz/L7j6d1/SgSw7Jo398dE+ck/6shVLSK02QprBy8oFD2hmD0vHIFJw28LgD0WUSySoKCNuOFSSEyNCSP9v8S783/BzoW4BS2cVzUD3iNyxD7+aWbDG35KwiUhEz2X39yYjo4EbrMt2RtruN2Ar0/GR/3J1rhtceZwbIVOMT8ZibEfhz3HFf7xbU+TgQXKaobrlmoNTkWvsxRDWfJM0yiihJYiCfmIM6WiMX09QnWfqFY7y5vDFEed2oqJhQWjO6jo5rIxidu9G9fYAUCVuZBRC0I9YCx7rcuuRItJBqkNzQ==</ds:X509Certificate></ds:X509Data></ds:KeyInfo>
+          </md:KeyDescriptor>
+          <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+          <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://example.okta.com/app/example_app/exk-test/sso/saml"/>
+          <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://example.okta.com/app/example_app/exk-test/sso/saml"/>
+        </md:IDPSSODescriptor>
+      </md:EntityDescriptor>
+      <sp entityID="http://localhost:3000/" assertionConsumerServiceURL="not a url"/>
+    </application>
+  </applications>
+</configuration>

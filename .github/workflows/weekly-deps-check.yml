@@ -58,4 +58,4 @@ jobs:
           ${{ runner.os }}-
 
     - name: Check ancient deps
-      run: lein ancient :all :exclude okta
+      run: lein ancient :all

@@ -1,28 +1,23 @@
-(defproject dev.bostonaholic/ring-okta "1.1.1-SNAPSHOT"
+(defproject dev.bostonaholic/ring-okta "2.0.0-SNAPSHOT"
   :description "Ring middleware for Okta Single Sign-on"
   :url "https://github.com/bostonaholic/ring-okta"
   :license {:name "The MIT License (MIT)"
             :url "https://mit-license.org"}
-  :repositories [["local" ~(str (.toURI (java.io.File. "maven_repository")))]]
   :dependencies [[org.clojure/clojure "1.9.0" :scope "provided"]
                  [org.clojure/core.incubator "0.1.4"]
                  [ring/ring-core "1.15.2" :scope "provided" :exclusions [commons-codec]]
                  [compojure "1.7.2" :exclusions [org.clojure/clojure ring/ring-codec commons-codec joda-time]]
-                 [org.clojure/data.codec "0.2.0"]
-                 [com.okta/saml-toolkit "1.0.12-000170-c7ed721" :upgrade :okta]
+                 [com.onelogin/java-saml-core "2.9.0"]
 
-                 ;; okta dependencies -- some are not specified in their pom,
-                 ;; others are borked because of our weird local repo thing that
-                 ;; we do in order to please the Travis-CI gods
-                 ;; FIXME: check if local repo is needed on GitHub Actions
-                 [com.sun.xml.parsers/jaxp-ri "1.4.5" :upgrade :okta]
-                 [org.slf4j/slf4j-api "1.6.1" :scope "provided" :upgrade :okta]
-                 [org.slf4j/slf4j-simple "1.6.1" :scope "test" :upgrade :okta]
-                 [com.google.inject/guice "3.0" :upgrade :okta]
-                 [org.bouncycastle/bcprov-jdk16 "1.45" :upgrade :okta]
-                 [org.apache.commons/commons-lang3 "3.0" :upgrade :okta]
-                 [javax.servlet/javax.servlet-api "3.0.1" :scope "provided" :upgrade :okta]
-                 [org.opensaml/opensaml "2.6.4" :upgrade :okta]]
+                 ;; xmlsec and commons-lang3 override the versions java-saml-core
+                 ;; brings in, which carry CVE-2023-44483 and CVE-2025-48924.
+                 ;; :pedantic? :abort then demands the slf4j-api and
+                 ;; commons-codec pins.
+                 [org.apache.santuario/xmlsec "2.3.5"]
+                 [org.apache.commons/commons-lang3 "3.18.0"]
+                 [org.slf4j/slf4j-api "1.7.36"]
+                 [commons-codec "1.17.1"]
+                 [org.slf4j/slf4j-simple "1.7.36" :scope "test"]]
 
   :pedantic? :abort
 

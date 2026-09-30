@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <default>http://www.okta.com/exk-test</default>
+  <loginUri>https://example.okta.com/app/example_app/exk-test/sso/saml</loginUri>
+  <suppressErrors>false</suppressErrors>
+  <applications>
+    <application>
+      <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://www.okta.com/exk-test">
+        <md:IDPSSODescriptor WantAuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+          <md:KeyDescriptor use="signing">
+            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>MIIC4DCCAcigAwIBAgIJAIbnTETnnsXgMA0GCSqGSIb3DQEBDAUAMB0xGzAZBgNVBAMTEnJpbmctb2t0YSB0ZXN0IGlkcDAgFw0yNjA5MjkyMTE0MjhaGA8yMTM2MDQwNTIxMTQyOFowHTEbMBkGA1UEAxMScmluZy1va3RhIHRlc3QgaWRwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxunNd1oz4yciu3h2zEPIKzthffXXPuHgc7Cjpowc63LfAqzfwAhSpSinbMsZAWi2dGciw3t5z6y2GV4vo5shVHbiqVcaZ262jPVWaAk5jPB/1SuipsPzaQIIK8YCNWaFpPQL8bRj3URgzl0rz4OaRRMU0lQxtkLrq0deFWKo38DO89iJE0ou7vhmktZtzENKUZ+aIEHt64b0AXlhckHt9cuHVHbk59GlMlBuyB32UntptUXVnovyWRCr4TSdEuE4LYasQSryNtJHuj1rB/POuiusUoltnpzs1e7Yb3IQ5PYO5PF6nsrTc1wF924ZQM/4abBP4fpgYIn9C8m2PlCKrwIDAQABoyEwHzAdBgNVHQ4EFgQUWnGqXz53uEWSmayBNdDfgthazUwwDQYJKoZIhvcNAQEMBQADggEBAL6DYlbz/WUl0WQtmlxcLjNd85GTaC/MpGt23E0Vkz5NfOJYnRBHpfC5V6w4LTQjPvJpkZ92PcyuO9EBtManLpr7J05jxn+hfE965fgEEdCN3icrPCjBmTvRV3H7OFaR3izjCP9QIJQyabMkeji6vIHn+uZVCiWVV+DEpHkCzIQL7Rti5/pAF8af/y4SCBqfsROeAvlN8kO9m/oWDXjBSLCp5YvPHwo6MzSs+1eYPBR/V/ZjTr6/dv3KCv7eNxNfSkeedudtrFfiK9a2ZZRnwQB5vGXnA71xBrNC1sAJwvapFbHTaBtQoKdo/Ao+c1NoblEN7NkNgi8Vc/4D8CiXzf8=</ds:X509Certificate></ds:X509Data></ds:KeyInfo>
+          </md:KeyDescriptor>
+          <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+          <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://example.okta.com/app/example_app/exk-test/sso/saml"/>
+          <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://example.okta.com/app/example_app/exk-test/sso/saml"/>
+        </md:IDPSSODescriptor>
+      </md:EntityDescriptor>
+      <sp entityID="http://localhost:3000/" assertionConsumerServiceURL="http://localhost:3000/login"/>
+    </application>
+  </applications>
+  <allowedAddresses>
+    <oktaUsers/>
+    <spUsers/>
+    <spGroups/>
+  </allowedAddresses>
+</configuration>

@@ -48,9 +48,21 @@ A dependency can bring in `bostonaholic/ring-okta` transitively, next to `dev.bo
 
 In Gradle or Maven, exclude group `bostonaholic`, artifact `ring-okta`, from that dependency.
 
-### Okta SAML Toolkit Dependency
+### Supported JDKs and Okta settings
 
-`ring-okta` depends on the Okta SAML Toolkit for Java, `com.okta/saml-toolkit` version `1.0.12-000170-c7ed721`, as declared in [project.clj](./project.clj). Okta does not publish this toolkit to a public Maven repository. This repository keeps a copy of the jar in [maven_repository/com/okta/saml-toolkit](./maven_repository/com/okta/saml-toolkit). Download the jar from there. Then install it into your local Maven repository, `~/.m2/repository`, with the `mvn install:install-file` goal.
+| ring-okta | SAML library | JDK | Okta SAML app signing |
+|---|---|---|---|
+| `2.0.0` and later | java-saml-core `2.9.0` | **Supported:** 11, 17, 21, and 25. CI tests each one.<br>**Not tested:** 8 and other versions. | **Supported:** RSA-SHA256, with the response and assertion both signed, the assertion only, or the response only.<br>**Not supported:** RSA-SHA1. |
+| `0.1.6` to `1.1.0` | Okta SAML Toolkit `1.0.12-000170-c7ed721` | **Not tested:** 8 to 15.<br>**Not supported:** 16 and later. Every login throws `IllegalAccessError` unless you start the JVM with `--add-exports=java.xml/com.sun.org.apache.xpath.internal.jaxp=ALL-UNNAMED`. | **Supported:** RSA-SHA256 or RSA-SHA1, with the response signed.<br>**Not supported:** the assertion signed only.<br>These versions do not check the Audience or Destination, so they accept a response that Okta made for another app. |
+| `0.1.0` to `0.1.5` | An earlier Okta SAML Toolkit | Not supported | Not supported |
+
+Okta has no SAML versions to choose from. What varies is each Okta app's signing settings, so the table lists those. Refer to **Okta Configuration** for the digest algorithms that `2.0.0` accepts.
+
+### SAML Dependency
+
+`ring-okta` validates Okta SAML responses with [java-saml-core](https://github.com/onelogin/java-saml) `2.9.0` (`com.onelogin/java-saml-core`, MIT License). Your build tool gets it from Maven Central with the other dependencies. You do not need a manual install.
+
+java-saml writes the full SAML response to its log at DEBUG level. Keep the `com.onelogin` logger above DEBUG in production, because anyone who can read those log lines can replay the response until it expires.
 
 ## Usage
 
@@ -69,8 +81,48 @@ In Gradle or Maven, exclude group `bostonaholic`, artifact `ring-okta`, from tha
 
 (def app
   (-> company-routes
-      (wrap-okta "https://company.okta.com")))
+      (wrap-okta "https://example.okta.com")))
 ```
+
+### Okta Configuration
+
+This section applies from version `2.0.0`. If you use `1.x`, refer to the [CHANGELOG.md](./CHANGELOG.md).
+
+`wrap-okta` reads the Okta configuration file from the `:okta-config` option, or from `okta-config.xml` on the classpath. The file holds one `application`. Its `md:EntityDescriptor` is the IdP metadata from your Okta app, unchanged. The `sp` element identifies your app. Copy its values from these Okta app fields:
+
+- `entityID`: "Audience URI (SP Entity ID)".
+- `assertionConsumerServiceURL`: "Single sign-on URL". This is the URL of your `POST /login` route.
+
+```xml
+<configuration><applications><application>
+  <md:EntityDescriptor entityID="http://www.okta.com/exk...">...unchanged Okta IdP metadata...</md:EntityDescriptor>
+  <sp entityID="https://app.example.com/" assertionConsumerServiceURL="https://app.example.com/login"/>
+</application></applications></configuration>
+```
+
+The tests cover these Okta signing settings:
+
+| Okta "Response" and "Assertion Signature" | Signature algorithm | Digest algorithm | Result |
+|---|---|---|---|
+| Both signed | RSA-SHA256 | SHA256 | Accepted |
+| Assertion signed only | RSA-SHA256 | SHA256 | Accepted |
+| Response signed only | RSA-SHA256 | SHA256 | Accepted |
+| Both signed | RSA-SHA256 | SHA1 | Accepted |
+| Both signed | RSA-SHA1 | SHA1 | Rejected. Set the Okta app to RSA-SHA256. |
+
+When a login fails, `ring-okta` throws an `ExceptionInfo`. Your app decides the HTTP status. `(:type (ex-data e))` is one of these:
+
+- `:ring.ring-okta.saml/invalid-saml-response`: the SAML response fails validation.
+- `:ring.ring-okta.saml/invalid-okta-config`: the configuration file is not valid. The message names the path, count, or java-saml settings code to fix.
+
+The tests use signed responses in the format that Okta documents. They do not come from a live Okta tenant. If a real Okta response fails to validate, [open an issue](https://github.com/bostonaholic/ring-okta/issues).
+
+### Upgrading from 1.x
+
+1. Add the `sp` element to each Okta configuration file. Copy its values from the Okta app fields "Audience URI (SP Entity ID)" and "Single sign-on URL".
+2. If your Okta app signs with RSA-SHA1, set it to RSA-SHA256.
+3. You can keep the `1.x` toolkit elements, such as `default`, `loginUri`, `suppressErrors`, and `allowedAddresses`. `ring-okta` ignores them.
+4. Log in once. If the configuration is not valid, the `invalid-okta-config` message names the path to fix.
 
 ## Documentation
 
@@ -84,11 +136,13 @@ The test coverage summary is built with [cloverage](https://github.com/lshift/cl
 
 ## Development
 
-A build of this project from a clone needs no separate toolkit install. The `"local"` repository in `project.clj` resolves the toolkit jar from `maven_repository/`. To use this library in your own project, use the steps in **Okta SAML Toolkit Dependency** above. The command below installs a new toolkit version into `maven_repository/`, with `-DlocalRepositoryPath` set to that directory:
+The tests validate signed SAML responses in `test-resources/saml/` against `test-resources/okta-config.xml`. To regenerate them, run the command below with `JAVA_HOME` set to JDK 17 or later:
 
 ```shell
-mvn install:install-file -Dfile=saml-toolkit.jar -DgroupId=com.okta -DartifactId=saml-toolkit -Dpackaging=jar -Dversion=<version> -DcreateChecksum=true -DupdateReleaseInfo=true -DgeneratePom=true -DlocalRepositoryPath=/path/to/localRepo
+JAVA_HOME=/path/to/jdk17+ script/generate-saml-fixtures
 ```
+
+Each run makes new throwaway keys, so it rewrites `okta-config.xml` and every `.b64` file. Commit them together. The script deletes the keys when it exits. Never commit a private key or keystore.
 
 ## Releases
 
