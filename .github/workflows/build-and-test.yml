@@ -86,5 +86,11 @@ jobs:
       if: matrix.java == 21
       run: |
         lein install
+        version=$(sed -n '1s/^(defproject [^ ]* "\([^"]*\)".*/\1/p' project.clj)
+        test -n "$version"
         cd examples/example-app
+        # The example depends on the latest release; build it against this
+        # commit's version, which lein install just put in the local repo.
+        sed -i.bak "s|\[dev.bostonaholic/ring-okta \"[^\"]*\"\]|[dev.bostonaholic/ring-okta \"$version\"]|" project.clj
+        grep -qF "[dev.bostonaholic/ring-okta \"$version\"]" project.clj
         lein check
